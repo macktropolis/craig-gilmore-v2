@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craig Gilmore — Comic Book Creator & Storyboard Artist</title>
+  <meta name="description" content="Official website of Craig Gilmore, veteran comic book creator, storyboard artist, and illustrator. 38 years of work in film, television, video games, and publishing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg:             #090909;
+      --surface:        #111111;
+      --surface-hi:     #191919;
+      --border:         rgba(255, 255, 255, 0.07);
+      --border-hi:      rgba(255, 255, 255, 0.14);
+
+      --text:           #f0ebe0;
+      --text-muted:     #7c7670;
+      --text-dim:       #3e3a36;
+
+      --accent:         #C8003E;   /* refined crimson — more ink, less hot-pink */
+      --accent-hi:      #E8004A;
+      --accent-glow:    rgba(200, 0, 62, 0.18);
+      --accent-dim:     rgba(200, 0, 62, 0.12);
+
+      --font-display:   'Bebas Neue', sans-serif;
+      --font-cond:      'Barlow Condensed', sans-serif;
+      --font-body:      'Barlow', sans-serif;
+      --font-logo:      'Dancing Script', cursive; /* retained as fallback only */
+
+      --nav-h:          68px;
+      --max-w:          1160px;
+      --pad:            clamp(1.25rem, 4vw, 2.5rem);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Subtle halftone dot texture — gives it a printed/ink quality */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a  { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--pad);
+    }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    .site-header {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      background: rgba(9, 9, 9, 0.88);
+      backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .logo img {
+      height: 52px;
+      width: auto;
+      mix-blend-mode: screen; /* drops the black bg, leaves the white signature */
+      filter: brightness(1.05);
+      transition: opacity 0.2s;
+    }
+    .logo:hover img { opacity: 0.85; }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.125rem;
+      margin-inline: auto;
+    }
+
+    .nav-link {
+      font-family: var(--font-cond);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.4rem 0.7rem;
+      border-radius: 3px;
+      transition: color 0.18s;
+      white-space: nowrap;
+      position: relative;
+    }
+    .nav-link:hover  { color: var(--text); }
+    .nav-link.active { color: var(--text); }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0.7rem; right: 0.7rem;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    /* Portfolio dropdown */
+    .nav-has-dropdown { position: relative; }
+    .nav-has-dropdown > .nav-link::after { content: none; }
+
+    .nav-caret {
+      font-size: 0.55rem;
+      margin-left: 0.2rem;
+      vertical-align: middle;
+      opacity: 0.5;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 0.625rem);
+      left: 0;
+      min-width: 155px;
+      background: var(--surface-hi);
+      border: 1px solid var(--border-hi);
+      border-radius: 5px;
+      padding: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.0625rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
+      pointer-events: none;
+    }
+    .nav-has-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition-delay: 0s;
+    }
+    .dropdown-menu a {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0.45rem 0.7rem;
+      border-radius: 3px;
+      transition: all 0.14s;
+    }
+    .dropdown-menu a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .nav-link-store {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .nav-link-store .ext-icon { font-size: 0.65rem; opacity: 0.5; }
+
+    /* Header social */
+    .header-social {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text-muted);
+      transition: all 0.18s;
+    }
+    .social-btn:hover { border-color: var(--border-hi); color: var(--text); }
+    .social-btn svg { width: 13px; height: 13px; fill: currentColor; }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(3rem, 8vw, 5rem) var(--pad);
+      padding-left: clamp(var(--pad), calc(50vw - 580px + var(--pad)), 6vw);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 9vw, 8.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.025em;
+      color: var(--text);
+      margin-bottom: 1.75rem;
+    }
+    .hero-name .name-last { color: var(--accent); }
+
+    .hero-roles {
+      font-family: var(--font-cond);
+      font-size: clamp(0.9rem, 1.5vw, 1.125rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 0.75rem;
+    }
+    .hero-roles .dot { color: var(--accent); }
+
+    .hero-bio {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      max-width: 46ch;
+      margin-bottom: 2.75rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.875rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-cond);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.8125rem 1.875rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hi);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px var(--accent-glow);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-hi);
+      color: var(--text-muted);
+    }
+    .btn-outline:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Placeholder artwork — replace with <img> */
+    .hero-artwork-placeholder {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(200,0,62,0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #1a0a12 0%, #0e0e14 50%, #090909 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-artwork-placeholder .art-hint {
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* Panel grid overlay on the visual — suggests storyboard/comic DNA */
+    .hero-artwork-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Gradient bleeds content into visual */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, rgba(9,9,9,0.3) 35%, transparent 65%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(transparent, var(--bg));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-cond);
+      font-size: 0.625rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      z-index: 2;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(var(--text-dim), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%   { opacity: 0.7; transform: scaleY(1);   transform-origin: top; }
+      100% { opacity: 0;   transform: scaleY(0.1); transform-origin: top; }
+    }
+
+    /* ============================================================
+       SHARED SECTION PARTS
+       ============================================================ */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: var(--font-cond);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 4.5vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0.025em;
+      color: var(--text);
+    }
+
+    /* ============================================================
+       PORTFOLIO SECTION
+       ============================================================ */
+    .portfolio-section {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+    }
+
+    .portfolio-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.1fr 1.1fr;
+      grid-template-rows: 280px 280px;
+      gap: 1rem;
+    }
+
+    .p-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--surface);
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+    .p-card:first-child { grid-row: span 2; }
+
+    /* Placeholder backgrounds for each category */
+    .p-card-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.5s ease;
+    }
+    .p-card:hover .p-card-bg { transform: scale(1.04); }
+
+    .p-card--storyboards .p-card-bg {
+      background: linear-gradient(135deg, #111 0%, #1a1410 100%);
+    }
+    .p-card--storyboards .p-card-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 42px;
+    }
+
+    .p-card--concept .p-card-bg {
+      background: radial-gradient(ellipse at 40% 60%, #1a1020 0%, #0d0d0d 70%);
+    }
+
+    .p-card--comics .p-card-bg {
+      background: linear-gradient(160deg, #12080d 0%, #0f0f12 100%);
+    }
+    .p-card--comics .p-card-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(200,0,62,0.06) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .p-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.1) 55%, transparent 75%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.75rem;
+      transition: background 0.3s;
+    }
+    .p-card:hover .p-card-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(0,0,0,0.4) 60%);
+    }
+
+    .p-card-cat {
+      font-family: var(--font-cond);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .p-card-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 1.1rem;
+    }
+
+    .p-card-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.22s, transform 0.22s, color 0.22s;
+    }
+    .p-card:hover .p-card-arrow {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--text);
+    }
+    .p-card-arrow svg {
+      width: 12px; height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      transition: transform 0.2s;
+    }
+    .p-card:hover .p-card-arrow svg { transform: translateX(3px); }
+
+    /* ============================================================
+       ETHEREAL SECTION
+       ============================================================ */
+    .ethereal-section {
+      background: var(--surface);
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Atmospheric glow */
+    .ethereal-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, var(--accent-dim) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .ethereal-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: center;
+    }
+
+    .ethereal-visual {
+      position: relative;
+    }
+
+    .ethereal-cover {
+      aspect-ratio: 2/3;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(165deg, #200a18 0%, #0f0818 50%, #0a0a10 100%);
+      position: relative;
+      box-shadow: 0 0 60px rgba(200,0,62,0.15), inset 0 0 1px rgba(200,0,62,0.3);
+    }
+    .ethereal-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(200,0,62,0.04) 1px, transparent 1px);
+      background-size: 18px 18px;
+    }
+    .ethereal-cover .cover-text {
+      position: absolute;
+      bottom: 2rem; left: 2rem; right: 2rem;
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: rgba(240,235,224,0.08);
+      pointer-events: none;
+    }
+
+    .ethereal-content { position: relative; z-index: 1; }
+
+    .ethereal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-cond);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(200,0,62,0.35);
+      border-radius: 2px;
+      padding: 0.28rem 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .ethereal-badge .pulse-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulseDot 1.6s ease-in-out infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .ethereal-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: 0.025em;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .ethereal-subtitle {
+      font-family: var(--font-cond);
+      font-size: 1rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+    .ethereal-desc {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      max-width: 48ch;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       ABOUT SNIPPET
+       ============================================================ */
+    .about-section {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: clamp(3rem, 6vw, 5rem);
+      align-items: start;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface-hi);
+      position: relative;
+    }
+    .about-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(15%) contrast(1.05);
+    }
+    /* Placeholder if no img — remove when real photo added */
+    .about-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #181210 0%, #0f0f0f 100%);
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(200,0,62,0.08));
+      pointer-events: none;
+    }
+
+    /* Accent bar beside photo */
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem; bottom: 1.5rem;
+      left: -1rem;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .about-content { padding-top: 0.5rem; }
+    .about-content .section-label { margin-bottom: 0.75rem; }
+    .about-content .section-title { margin-bottom: 1.75rem; }
+
+    .about-body {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .tag {
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.28rem 0.75rem;
+      border-radius: 2px;
+      transition: border-color 0.18s, color 0.18s;
+    }
+    .tag:hover { border-color: var(--border-hi); color: var(--text); }
+
+    .about-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ============================================================
+       COMMISSION BANNER
+       ============================================================ */
+    .commission-band {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    }
+    .commission-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .commission-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 3.25rem);
+      line-height: 1;
+      letter-spacing: 0.025em;
+      color: var(--text);
+    }
+    .commission-heading em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .site-footer {
+      padding: clamp(3.5rem, 7vw, 5.5rem) 0 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 3rem;
+      align-items: start;
+      padding-bottom: 3rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-logo img {
+      height: 72px;
+      width: auto;
+      mix-blend-mode: screen;
+      filter: brightness(1.05) opacity(0.75);
+      transition: opacity 0.2s;
+    }
+    .footer-logo:hover img { opacity: 1; filter: brightness(1.05) opacity(1); }
+    .footer-logo-sub {
+      font-family: var(--font-cond);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 1rem 2.5rem;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+    }
+    .footer-nav a {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.16s;
+    }
+    .footer-nav a:hover { color: var(--text-muted); }
+
+    .footer-social {
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      padding-top: 0.375rem;
+    }
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color 0.16s;
+    }
+    .footer-social-link:hover { color: var(--text-muted); }
+    .footer-social-link svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
+
+    .footer-bottom {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+      max-width: 65ch;
+    }
+    .footer-copy a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+    .footer-copy a:hover { color: var(--text); }
+
+    .footer-circa {
+      font-family: var(--font-cond);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .footer-circa a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 2px; transition: color 0.15s; }
+    .footer-circa a:hover { color: var(--text-muted); }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATIONS
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: unset;
+      }
+      .hero-visual {
+        position: absolute;
+        inset: 0;
+        opacity: 0.35;
+      }
+      .hero-content {
+        padding: calc(var(--nav-h) + 3rem) var(--pad) 5rem;
+        position: relative;
+        z-index: 1;
+      }
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .p-card:first-child {
+        grid-column: span 2;
+        grid-row: auto;
+      }
+      .ethereal-inner {
+        grid-template-columns: 1fr;
+      }
+      .ethereal-visual { max-width: 260px; }
+      .about-inner {
+        grid-template-columns: 240px 1fr;
+      }
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+      .footer-logo-wrap { grid-column: span 2; }
+    }
+
+    @media (max-width: 640px) {
+      .site-nav { display: none; }
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 240px 200px 200px;
+      }
+      .p-card:first-child { grid-column: auto; }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-photo-wrap::before { display: none; }
+      .commission-inner { flex-direction: column; align-items: flex-start; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-logo-wrap { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER / NAV
+       ============================================================ -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a href="index.html" class="logo" aria-label="Craig Gilmore — Home">
+        <img src="craig-logo-white-nobg.png" alt="Craig Gilmore">
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html" class="nav-link active">Home</a>
+
+        <div class="nav-has-dropdown">
+          <a href="#" class="nav-link" aria-haspopup="true">
+            Portfolio <span class="nav-caret">▾</span>
+          </a>
+          <div class="dropdown-menu" role="menu">
+            <a href="storyboards.html" role="menuitem">Storyboards</a>
+            <a href="concept-art.html"  role="menuitem">Concept Art</a>
+            <a href="comics.html"       role="menuitem">Comics</a>
+          </div>
+        </div>
+
+        <a href="ethereal.html" class="nav-link">Ethereal: A Tale</a>
+        <a href="about.html"    class="nav-link">About</a>
+        <a href="news.html"     class="nav-link">News</a>
+        <a href="https://craiggilmore.square.site" class="nav-link nav-link-store" target="_blank" rel="noopener">
+          Original Art Store <span class="ext-icon">↗</span>
+        </a>
+      </nav>
+
+      <div class="header-social" aria-label="Social media links">
+        <!-- X / Twitter -->
+        <a href="#" class="social-btn" aria-label="X (Twitter)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <!-- Facebook -->
+        <a href="#" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero" aria-label="Introduction">
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Illustrator &amp; Artist</p>
+
+      <h1 class="hero-name">
+        Craig<br>
+        <span class="name-last">Gilmore</span>
+      </h1>
+
+      <p class="hero-roles">
+        Comic Book Creator
+        <span class="dot" aria-hidden="true">·</span>
+        Storyboard Artist
+        <span class="dot" aria-hidden="true">·</span>
+        Illustrator
+      </p>
+
+      <p class="hero-bio">
+        38-year veteran of comic books, motion picture, television, and video game illustration. Based in Bolivia, NC — working worldwide.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+        <a href="ethereal.html" class="btn btn-outline">Ethereal: A Tale</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <!-- Replace .hero-artwork-placeholder with an <img> of Craig's hero artwork -->
+      <div class="hero-artwork-placeholder">
+        <span class="art-hint">Featured artwork</span>
+      </div>
+    </div>
+
+    <p class="scroll-hint" aria-hidden="true">Scroll</p>
+
+  </section>
+
+
+  <!-- ============================================================
+       PORTFOLIO SECTION
+       ============================================================ -->
+  <section class="portfolio-section" id="portfolio" aria-label="Portfolio">
+    <div class="container">
+
+      <div class="portfolio-header">
+        <div class="reveal">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title">Portfolio</h2>
+        </div>
+        <a href="storyboards.html" class="btn btn-outline reveal reveal-delay-1"
+           style="align-self:flex-end;">View All Work</a>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <!-- STORYBOARDS — large left card -->
+        <a href="storyboards.html" class="p-card p-card--storyboards reveal">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Feature Work</p>
+            <h3 class="p-card-name">Storyboards</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- CONCEPT ART -->
+        <a href="concept-art.html" class="p-card p-card--concept reveal reveal-delay-1">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Development</p>
+            <h3 class="p-card-name">Concept Art</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- COMICS -->
+        <a href="comics.html" class="p-card p-card--comics reveal reveal-delay-2">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Publishing</p>
+            <h3 class="p-card-name">Comics</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ETHEREAL: A TALE
+       ============================================================ -->
+  <section class="ethereal-section" aria-label="Ethereal: A Tale — graphic novel">
+    <div class="container">
+      <div class="ethereal-inner">
+
+        <div class="ethereal-visual reveal">
+          <!-- Replace with actual Ethereal cover art when available -->
+          <div class="ethereal-cover" aria-hidden="true">
+            <span class="cover-text">Ethereal:<br>A Tale</span>
+          </div>
+        </div>
+
+        <div class="ethereal-content">
+          <div class="ethereal-badge">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Now in Development
+          </div>
+
+          <p class="section-label reveal">Graphic Novel</p>
+          <h2 class="ethereal-title reveal reveal-delay-1">Ethereal:<br>A Tale</h2>
+          <p class="ethereal-subtitle reveal reveal-delay-2">An Original Graphic Novel by Craig Gilmore</p>
+
+          <p class="ethereal-desc reveal reveal-delay-3">
+            Craig's most ambitious creative work to date. Sign up to be notified about the official release announcement, preview art drops, and Kickstarter launch.
+          </p>
+
+          <div class="reveal reveal-delay-4">
+            <a href="ethereal.html" class="btn btn-primary">Get Notified of Release</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT SNIPPET
+       ============================================================ -->
+  <section class="about-section" aria-label="About Craig Gilmore">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-photo-wrap reveal">
+          <div class="about-photo">
+            <!-- Replace placeholder with actual photo: <img src="img/craig-gilmore.jpg" alt="Craig Gilmore"> -->
+            <div class="about-photo-placeholder" aria-label="Portrait of Craig Gilmore">CG</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <p class="section-label reveal">About</p>
+          <h2 class="section-title reveal reveal-delay-1">38 Years<br>in the Industry</h2>
+
+          <div class="about-body reveal reveal-delay-2">
+            <p>
+              I am a 38-year veteran comic book creator and storyboard artist actively producing work for the motion picture, television, and video game industries, as well as advertising agencies and major comic book publishers.
+            </p>
+            <br>
+            <p>
+              Based in Bolivia, NC, I work from my home studio with a fully mobile kit for on-location and remote productions. I am a proud <strong>I.A.T.S.E.</strong> union artist, represented for personal appearances by <strong>Pearl Talent Management</strong>.
+            </p>
+          </div>
+
+          <div class="about-tags reveal reveal-delay-3">
+            <span class="tag">I.A.T.S.E. Union</span>
+            <span class="tag">Pearl Talent Management</span>
+            <span class="tag">Concept Illustration</span>
+            <span class="tag">Shooting Boards</span>
+            <span class="tag">Comic Books</span>
+            <span class="tag">Live Action</span>
+          </div>
+
+          <div class="about-ctas reveal reveal-delay-4">
+            <a href="about.html"    class="btn btn-outline">Full Bio &amp; Résumé</a>
+            <a href="about.html#commissions" class="btn btn-primary">Commission Info</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       COMMISSION BAND
+       ============================================================ -->
+  <div class="commission-band">
+    <div class="container commission-inner">
+      <h2 class="commission-heading reveal">
+        Available for <em>Commissions</em>
+      </h2>
+      <a href="about.html#commissions" class="btn btn-primary reveal reveal-delay-1">
+        Email About a Commission
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+
+      <div class="footer-top">
+        <div class="footer-logo-wrap">
+          <a href="index.html" class="footer-logo" aria-label="Craig Gilmore — Home">
+            <img src="craig-logo-white-nobg.png" alt="Craig Gilmore">
+          </a>
+          <!-- Replace with actual SVG logo above -->
+          <div class="footer-logo-sub">Comic Book Creator &amp; Storyboard Artist</div>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="storyboards.html">Storyboards</a>
+          <a href="concept-art.html">Concept Art</a>
+          <a href="comics.html">Comics</a>
+          <a href="ethereal.html">Ethereal: A Tale</a>
+          <a href="about.html">About</a>
+          <a href="news.html">News</a>
+          <a href="https://craiggilmore.square.site" target="_blank" rel="noopener">Original Art Store ↗</a>
+        </nav>
+
+        <div class="footer-social" aria-label="Social media">
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X (Twitter)
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          Copyright &copy;1990–2025 Craig Gilmore and/or their respective holders. May not be reused or reprinted without permission. All contents of this site are protected under
+          <a href="https://www.copyright.gov/" target="_blank" rel="noopener">intellectual property</a> laws.<br>
+          Ethereal: A Tale logo designed by Chris Clark /
+          <a href="#" target="_blank" rel="noopener">Circa71 Digital Design</a>.
+        </p>
+        <p class="footer-circa">
+          Site design by <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       JS — Scroll reveal
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // Scroll-reveal via IntersectionObserver
+      const revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+        revealEls.forEach(function (el) { observer.observe(el); });
+      } else {
+        // Fallback: just make everything visible
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      // Sticky header bg intensifies on scroll
+      var header = document.querySelector('.site-header');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 40) {
+          header.style.background = 'rgba(9, 9, 9, 0.97)';
+        } else {
+          header.style.background = 'rgba(9, 9, 9, 0.88)';
+        }
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
