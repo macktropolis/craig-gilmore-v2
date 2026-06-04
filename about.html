@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Craig Gilmore</title>
+  <meta name="description" content="38-year veteran comic book creator and storyboard artist. Learn about Craig Gilmore's background, credits, and commission availability.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+
+    /* Page banner */
+    .page-banner {
+      padding-top: var(--nav-h);
+      padding-bottom: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-banner-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: 2rem;
+      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+    }
+    .page-banner-label {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: var(--font-cond);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .page-banner-label::before {
+      content: '';
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--accent);
+    }
+    .page-banner-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.025em;
+      color: var(--text);
+    }
+
+    /* Bio section */
+    .bio-section {
+      padding: clamp(4rem, 8vw, 6rem) 0;
+    }
+    .bio-inner {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: clamp(3rem, 6vw, 5rem);
+      align-items: start;
+    }
+    .bio-photo-wrap { position: relative; }
+    .bio-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface-hi);
+      position: relative;
+    }
+    .bio-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(15%) contrast(1.05);
+    }
+    .bio-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #181210 0%, #0f0f0f 100%);
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--text-dim);
+    }
+    .bio-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(200,0,62,0.08));
+      pointer-events: none;
+    }
+    .bio-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem; bottom: 1.5rem;
+      left: -1rem;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .bio-content { padding-top: 0.25rem; }
+    .bio-body {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.85;
+    }
+    .bio-body p + p { margin-top: 1.25rem; }
+    .bio-body strong { color: var(--text); font-weight: 500; }
+    .bio-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .bio-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .bio-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+
+    /* Commission section */
+    .commission-section {
+      background: var(--surface);
+      padding: clamp(4rem, 8vw, 6rem) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .commission-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, var(--accent-dim) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .commission-inner { position: relative; z-index: 1; }
+    .commission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-top: 2.5rem;
+    }
+    .commission-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+    }
+    .commission-card-title {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.875rem;
+    }
+    .commission-card p {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.75;
+    }
+    .commission-card strong { color: var(--text); font-weight: 500; }
+    .commission-cta { margin-top: 2.5rem; }
+
+    /* Credits section */
+    .credits-section {
+      padding: clamp(4rem, 8vw, 6rem) 0;
+    }
+    .credits-intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .credits-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .credit-item {
+      display: grid;
+      grid-template-columns: 4.5rem 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .credit-item:hover { background: var(--surface-hi); }
+    .credit-item:last-child { border-bottom: none; }
+    .credit-year {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .credit-title {
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .credit-role {
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Education */
+    .education-section {
+      background: var(--surface);
+      padding: clamp(3rem, 6vw, 4rem) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .education-inner {
+      display: flex;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .education-degree {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      color: var(--text);
+      line-height: 1;
+    }
+    .education-meta {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .bio-inner { grid-template-columns: 240px 1fr; }
+      .commission-grid { grid-template-columns: 1fr; }
+      .credits-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .bio-inner { grid-template-columns: 1fr; }
+      .bio-photo-wrap::before { display: none; }
+      .credits-intro { flex-direction: column; align-items: flex-start; }
+      .credit-item { grid-template-columns: 3.5rem 1fr; }
+      .credit-role { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="Craig Gilmore — Home">
+        <img src="images/craig-logo-white-nobg.webp" alt="Craig Gilmore">
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-has-dropdown">
+          <a href="#" class="nav-link" aria-haspopup="true">Portfolio <span class="nav-caret">▾</span></a>
+          <div class="dropdown-menu" role="menu">
+            <a href="storyboards.html" role="menuitem">Storyboards</a>
+            <a href="concept-art.html"  role="menuitem">Concept Art</a>
+            <a href="comics.html"       role="menuitem">Comics</a>
+          </div>
+        </div>
+        <a href="ethereal.html" class="nav-link">Ethereal: A Tale</a>
+        <a href="about.html"    class="nav-link active">About</a>
+        <a href="news.html"     class="nav-link">News</a>
+        <a href="https://craiggilmore.square.site" class="nav-link nav-link-store" target="_blank" rel="noopener">
+          Original Art Store <span class="ext-icon">↗</span>
+        </a>
+      </nav>
+      <div class="header-social" aria-label="Social media links">
+        <a href="#" class="social-btn" aria-label="X (Twitter)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- PAGE BANNER -->
+  <div class="page-banner">
+    <div class="container">
+      <div class="page-banner-inner">
+        <div>
+          <p class="page-banner-label">Craig Gilmore</p>
+          <h1 class="page-banner-title">About</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- BIO -->
+  <section class="bio-section" aria-label="Biography">
+    <div class="container">
+      <div class="bio-inner">
+
+        <div class="bio-photo-wrap reveal">
+          <div class="bio-photo">
+            <!-- Replace with: <img src="images/craig-gilmore-portrait.jpg" alt="Craig Gilmore"> -->
+            <div class="bio-photo-placeholder" aria-label="Portrait of Craig Gilmore">CG</div>
+          </div>
+        </div>
+
+        <div class="bio-content">
+          <p class="section-label reveal">Biography</p>
+          <h2 class="section-title reveal reveal-delay-1">38 Years<br>in the Industry</h2>
+
+          <div class="bio-body reveal reveal-delay-2">
+            <p>
+              Thank you for your interest in my work and welcome to my official website. I am a 38-year veteran comic book creator and storyboard artist actively producing work worldwide for the motion picture, television, and video game industries, as well as advertising agencies and major comic book publishers.
+            </p>
+            <p>
+              I am currently based in Bolivia, NC and normally prefer to work from my home studio. However, I have a studio kit that is completely mobile for extended on-location as well as remote television and motion picture productions worldwide.
+            </p>
+            <p>
+              With regards to the movie and television projects I take on, I am interested in <strong>conceptual illustration</strong>, <strong>poster illustration</strong>, and live action <strong>shooting boards</strong> — meaning quick and sketchy, with most of the work focusing on storytelling.
+            </p>
+            <p>
+              I am a proud <strong>I.A.T.S.E.</strong> union artist. I am represented for personal appearances and guest speaking engagements by <strong>Pearl Talent Management</strong> — please contact Brittany Byrum at <a href="mailto:brittanyb.ptmgmt@gmail.com">brittanyb.ptmgmt@gmail.com</a>.
+            </p>
+            <p>
+              You can also find my film and television credits on <a href="http://www.imdb.com/name/nm1725689/?ref_=fn_al_nm_2" target="_blank" rel="noopener">IMDb</a>.
+            </p>
+          </div>
+
+          <div class="bio-meta reveal reveal-delay-3">
+            <span class="tag">I.A.T.S.E. Union</span>
+            <span class="tag">Pearl Talent Management</span>
+            <span class="tag">Storyboard Artist</span>
+            <span class="tag">Concept Illustration</span>
+            <span class="tag">Poster Illustration</span>
+            <span class="tag">Comic Books</span>
+            <span class="tag">Live Action Shooting Boards</span>
+            <span class="tag">Bolivia, NC</span>
+          </div>
+
+          <div class="bio-ctas reveal reveal-delay-4">
+            <a href="mailto:craig@craiggilmore.net" class="btn btn-primary">Email Craig</a>
+            <a href="http://www.imdb.com/name/nm1725689/" class="btn btn-outline" target="_blank" rel="noopener">View on IMDb ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- COMMISSIONS -->
+  <section class="commission-section" id="commissions" aria-label="Commission information">
+    <div class="container commission-inner">
+
+      <p class="section-label reveal">Work With Craig</p>
+      <h2 class="section-title reveal reveal-delay-1">Commission Info</h2>
+
+      <div class="commission-grid">
+        <div class="commission-card reveal reveal-delay-1">
+          <p class="commission-card-title">Availability</p>
+          <p>Availability is based on Craig's current comics, film, or TV show workload. Turnaround time is generally <strong>1–2 months</strong>, and you will be kept updated on the status of your piece throughout.</p>
+        </div>
+        <div class="commission-card reveal reveal-delay-2">
+          <p class="commission-card-title">Rates</p>
+          <p>Craig uses a sliding scale that starts between <strong>$300 (black &amp; white)</strong> and <strong>$1,000 (full color)</strong>, based on your request factors. Commissions are normally completed on <strong>11×14 bristol board</strong> unless a specific size is requested.</p>
+        </div>
+        <div class="commission-card reveal reveal-delay-3">
+          <p class="commission-card-title">Payment</p>
+          <p>Payment is due when the piece is completed — <strong>PayPal or Square only</strong>. Pre-payment in person is accepted at shows. It's always okay to ask questions; Craig will do his best to work with you.</p>
+        </div>
+        <div class="commission-card reveal reveal-delay-4">
+          <p class="commission-card-title">Convention Sketches</p>
+          <p>Craig sells pre-drawn original sketches at his table at conventions, and may maintain a post-show sketch list for pieces completed at home. Live sketching at shows is limited — check with him at the table during slower periods.</p>
+        </div>
+      </div>
+
+      <div class="commission-cta reveal">
+        <a href="mailto:craig@craiggilmore.net" class="btn btn-primary">Email About a Commission</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- EDUCATION -->
+  <div class="education-section">
+    <div class="container">
+      <div class="education-inner">
+        <div>
+          <h2 class="education-degree">Education</h2>
+        </div>
+        <div>
+          <p class="education-degree" style="font-size: clamp(1.25rem, 2vw, 1.75rem); color: var(--text-muted);">Alamance Community College</p>
+          <p class="education-meta">Graham, N.C. &nbsp;·&nbsp; 1987–1989 &nbsp;·&nbsp; A.A.S. — Commercial Art &amp; Illustration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CREDITS -->
+  <section class="credits-section" aria-label="Film and television credits">
+    <div class="container">
+
+      <div class="credits-intro reveal">
+        <div>
+          <p class="section-label">63+ Titles</p>
+          <h2 class="section-title">Film &amp; TV Credits</h2>
+        </div>
+        <a href="http://www.imdb.com/name/nm1725689/" class="btn btn-outline" target="_blank" rel="noopener" style="align-self:flex-end;">View on IMDb ↗</a>
+      </div>
+
+      <div class="credits-list reveal reveal-delay-1">
+        <div class="credit-item"><span class="credit-year">2020</span><span class="credit-title">Coming 2 America</span><span class="credit-role">Concept Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2020</span><span class="credit-title">Morbius, the Living Vampire</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2019</span><span class="credit-title">Lovecraft Country (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2019</span><span class="credit-title">Shaft</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2019</span><span class="credit-title">Swamp Thing (TV)</span><span class="credit-role">Concept Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2019</span><span class="credit-title">Doom Patrol (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2019</span><span class="credit-title">Finding Steve McQueen</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2018</span><span class="credit-title">Hell Fest</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2018</span><span class="credit-title">The House with a Clock in Its Walls</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2018</span><span class="credit-title">Lodge 49 (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2018</span><span class="credit-title">Acrimony</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012–19</span><span class="credit-title">The Walking Dead (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2017</span><span class="credit-title">Thank You for Your Service</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2017</span><span class="credit-title">Red Blooded (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2017</span><span class="credit-title">Rings</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Hidden Figures</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Middle School: The Worst Years of My Life</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">MacGyver (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Stranger Things (TV)</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Cell</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Term Life</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Greenleaf (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">Triple 9</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2016</span><span class="credit-title">The 5th Wave</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2015</span><span class="credit-title">Sleepy Hollow (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2015</span><span class="credit-title">Big Brother (TV)</span><span class="credit-role">Concept Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2015</span><span class="credit-title">Devious Maids (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2015</span><span class="credit-title">Bessie (TV Movie)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014–15</span><span class="credit-title">The Red Road (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2015</span><span class="credit-title">Powers (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Constantine (TV)</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Addicted</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Kill the Messenger</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Let's Be Cops</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2010–14</span><span class="credit-title">The Vampire Diaries (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Resurrection (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2014</span><span class="credit-title">Endless Love</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2013</span><span class="credit-title">Prisoners</span><span class="credit-role">Art Graphics / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2013</span><span class="credit-title">Killing Season</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2013</span><span class="credit-title">Out There (TV)</span><span class="credit-role">Lead Background Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">Local Talent (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">Homeland (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">Revolution (TV)</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">The Reluctant Fundamentalist</span><span class="credit-role">Illustrator</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">The Watch</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">Let It Shine (TV Movie)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">Ghost Recon: Future Soldier (Game)</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2012</span><span class="credit-title">American Reunion</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2011</span><span class="credit-title">Necessary Roughness (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2010</span><span class="credit-title">Main Street</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2004–11</span><span class="credit-title">One Tree Hill (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2009</span><span class="credit-title">Cars Race-O-Rama (Game)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2009</span><span class="credit-title">Sorority Row</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2009</span><span class="credit-title">Army Wives (TV)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2009</span><span class="credit-title">The Way of War</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2008</span><span class="credit-title">SpongeBob: Globs of Doom (Game)</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2008</span><span class="credit-title">The Secret Life of Bees</span><span class="credit-role">Illustrator / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2008</span><span class="credit-title">The Strangers</span><span class="credit-role">Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2007</span><span class="credit-title">Ghost Recon: Advanced Warfighter 2 (Game)</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2005</span><span class="credit-title">Ghost Recon Advanced Warfighter (Game)</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2005</span><span class="credit-title">Surface (TV)</span><span class="credit-role">Concept Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2005</span><span class="credit-title">Ghost Recon 2: Summit Strike (Game)</span><span class="credit-role">Concept / Storyboard Artist</span></div>
+        <div class="credit-item"><span class="credit-year">2004</span><span class="credit-title">Ghost Recon 2 (Game)</span><span class="credit-role">Storyboard Artist</span></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logo-wrap">
+          <a href="index.html" class="footer-logo" aria-label="Craig Gilmore — Home">
+            <img src="images/craig-logo-white-nobg.webp" alt="Craig Gilmore">
+          </a>
+          <div class="footer-logo-sub">Comic Book Creator &amp; Storyboard Artist</div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="storyboards.html">Storyboards</a>
+          <a href="concept-art.html">Concept Art</a>
+          <a href="comics.html">Comics</a>
+          <a href="ethereal.html">Ethereal: A Tale</a>
+          <a href="about.html">About</a>
+          <a href="news.html">News</a>
+          <a href="https://craiggilmore.square.site" target="_blank" rel="noopener">Original Art Store ↗</a>
+        </nav>
+        <div class="footer-social" aria-label="Social media">
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X (Twitter)
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          Copyright &copy;1990–2025 Craig Gilmore and/or their respective holders. May not be reused or reprinted without permission. All contents of this site are protected under
+          <a href="https://www.copyright.gov/" target="_blank" rel="noopener">intellectual property</a> laws.<br>
+          Ethereal: A Tale logo designed by Chris Clark /
+          <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>.
+        </p>
+        <p class="footer-circa">
+          Site design by <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      const revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        revealEls.forEach(function (el) { observer.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+      var header = document.querySelector('.site-header');
+      window.addEventListener('scroll', function () {
+        header.style.background = window.scrollY > 40 ? 'rgba(9,9,9,0.97)' : 'rgba(9,9,9,0.88)';
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storyboards — Craig Gilmore</title>
+  <meta name="description" content="Storyboard work by Craig Gilmore for feature film, television, and video games — including The Walking Dead, Morbius, Stranger Things, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+
+    /* Page banner */
+    .page-banner {
+      padding-top: var(--nav-h);
+      border-bottom: 1px solid var(--border);
+    }
+    .page-banner-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
+      flex-wrap: wrap;
+    }
+    .page-banner-label {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-family: var(--font-cond);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .page-banner-label::before {
+      content: '';
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--accent);
+    }
+    .page-banner-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.025em;
+      color: var(--text);
+    }
+    .page-banner-note {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      max-width: 36ch;
+      line-height: 1.6;
+      align-self: flex-end;
+      padding-bottom: 0.25rem;
+    }
+
+    /* Gallery layout */
+    .gallery-section {
+      padding: clamp(4rem, 8vw, 6rem) 0;
+    }
+
+    /* Project block */
+    .project-block {
+      margin-bottom: clamp(4rem, 8vw, 6rem);
+    }
+    .project-block:last-child { margin-bottom: 0; }
+
+    .project-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .project-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: var(--text);
+      line-height: 1;
+    }
+    .project-meta {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .project-tag {
+      font-family: var(--font-cond);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(200,0,62,0.35);
+      border-radius: 2px;
+      padding: 0.2rem 0.6rem;
+      margin-left: auto;
+    }
+
+    /* Image grid */
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+    .img-grid--wide {
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    }
+    .img-grid--sequence {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .img-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+      background: var(--surface);
+      cursor: zoom-in;
+    }
+    .img-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+      aspect-ratio: 4/3;
+    }
+    .img-grid--sequence .img-item img {
+      aspect-ratio: 3/4;
+    }
+    .img-item:hover img { transform: scale(1.04); }
+
+    .img-item-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      padding: 1.5rem 0.875rem 0.75rem;
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .img-item:hover .img-item-caption { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.94);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox.is-open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 2px;
+      box-shadow: 0 0 80px rgba(0,0,0,0.6);
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.25rem; right: 1.5rem;
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.4rem 0.875rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lightbox-close:hover { color: var(--text); border-color: var(--border-hi); }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .img-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .img-grid--sequence { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .project-tag { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="Craig Gilmore — Home">
+        <img src="images/craig-logo-white-nobg.webp" alt="Craig Gilmore">
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-has-dropdown">
+          <a href="#" class="nav-link active" aria-haspopup="true">Portfolio <span class="nav-caret">▾</span></a>
+          <div class="dropdown-menu" role="menu">
+            <a href="storyboards.html" role="menuitem">Storyboards</a>
+            <a href="concept-art.html"  role="menuitem">Concept Art</a>
+            <a href="comics.html"       role="menuitem">Comics</a>
+          </div>
+        </div>
+        <a href="ethereal.html" class="nav-link">Ethereal: A Tale</a>
+        <a href="about.html"    class="nav-link">About</a>
+        <a href="news.html"     class="nav-link">News</a>
+        <a href="https://craiggilmore.square.site" class="nav-link nav-link-store" target="_blank" rel="noopener">
+          Original Art Store <span class="ext-icon">↗</span>
+        </a>
+      </nav>
+      <div class="header-social" aria-label="Social media links">
+        <a href="#" class="social-btn" aria-label="X (Twitter)" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Facebook" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="#" class="social-btn" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- PAGE BANNER -->
+  <div class="page-banner">
+    <div class="container">
+      <div class="page-banner-inner">
+        <div>
+          <p class="page-banner-label">Portfolio</p>
+          <h1 class="page-banner-title">Storyboards</h1>
+        </div>
+        <p class="page-banner-note">Feature film, television, and video game storyboard work. Click any image to enlarge.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="container">
+
+      <!-- Morbius -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">Morbius</h2>
+          <span class="project-meta">Sony / Marvel Studios &nbsp;·&nbsp; 2020</span>
+          <span class="project-tag">Feature Film</span>
+        </div>
+        <div class="img-grid img-grid--sequence">
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_01.jpg" data-caption="Morbius — Page 01">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_01.jpg" alt="Morbius storyboard page 1" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_02.jpg" data-caption="Morbius — Page 02">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_02.jpg" alt="Morbius storyboard page 2" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_03.jpg" data-caption="Morbius — Page 03">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_03.jpg" alt="Morbius storyboard page 3" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_04.jpg" data-caption="Morbius — Page 04">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_04.jpg" alt="Morbius storyboard page 4" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_05.jpg" data-caption="Morbius — Page 05">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_05.jpg" alt="Morbius storyboard page 5" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_06.jpg" data-caption="Morbius — Page 06">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_06.jpg" alt="Morbius storyboard page 6" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_07.jpg" data-caption="Morbius — Page 07">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_07.jpg" alt="Morbius storyboard page 7" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_08.jpg" data-caption="Morbius — Page 08">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_08.jpg" alt="Morbius storyboard page 8" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_09.jpg" data-caption="Morbius — Page 09">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_09.jpg" alt="Morbius storyboard page 9" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_10.jpg" data-caption="Morbius — Page 10">
+            <img src="content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_10.jpg" alt="Morbius storyboard page 10" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- The Walking Dead -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">The Walking Dead</h2>
+          <span class="project-meta">AMC &nbsp;·&nbsp; TV Series &nbsp;·&nbsp; 2012–2019</span>
+          <span class="project-tag">Television</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/WalkingDead1.jpg" data-caption="The Walking Dead">
+            <img src="content/uploads/2013/02/WalkingDead1.jpg" alt="The Walking Dead storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/DalesDeathBoards3-1.jpg" data-caption="Dale's Death — The Walking Dead">
+            <img src="content/uploads/2013/02/DalesDeathBoards3-1.jpg" alt="Dale's Death storyboard — The Walking Dead" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/Pg04f.jpg" data-caption="The Walking Dead Ep 211 — Page 04">
+            <img src="content/uploads/2013/02/Pg04f.jpg" alt="The Walking Dead Episode 211 page 4" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/03/Walking-Dead.jpg" data-caption="The Walking Dead">
+            <img src="content/uploads/2013/03/Walking-Dead.jpg" alt="The Walking Dead storyboard" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Prisoners (Scene 55) -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">Prisoners</h2>
+          <span class="project-meta">Warner Bros. &nbsp;·&nbsp; 2013</span>
+          <span class="project-tag">Feature Film</span>
+        </div>
+        <div class="img-grid img-grid--sequence">
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 01">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 1" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 02">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 2" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 03">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 3" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 04">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 4" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 05">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 5" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 06">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 6" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 07">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 7" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 08">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 8" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 09">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 9" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 10">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 10" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 11">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 11" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 12">
+            <img src="content/uploads/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 12" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Revolution -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">Revolution</h2>
+          <span class="project-meta">NBC &nbsp;·&nbsp; TV Series &nbsp;·&nbsp; 2012</span>
+          <span class="project-tag">Television</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/RevolutionStairs.jpg" data-caption="Revolution — Stairs">
+            <img src="content/uploads/2013/02/RevolutionStairs.jpg" alt="Revolution NBC storyboard — stairs sequence" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/INTERIOR-STAIRS.jpg" data-caption="Revolution — Interior Stairs">
+            <img src="content/uploads/2013/02/INTERIOR-STAIRS.jpg" alt="Revolution NBC storyboard — interior stairs" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- One Tree Hill -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">One Tree Hill</h2>
+          <span class="project-meta">The CW &nbsp;·&nbsp; TV Series &nbsp;·&nbsp; 2004–2011</span>
+          <span class="project-tag">Television</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/KarensCafeTest.jpg" data-caption="One Tree Hill — Karen's Café">
+            <img src="content/uploads/2013/02/KarensCafeTest.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/KarensCafe.jpg" data-caption="One Tree Hill — Karen's Café">
+            <img src="content/uploads/2013/02/KarensCafe.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/KarensCafe1.jpg" data-caption="One Tree Hill — Karen's Café">
+            <img src="content/uploads/2013/02/KarensCafe1.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- The Strangers -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">The Strangers</h2>
+          <span class="project-meta">Rogue Pictures &nbsp;·&nbsp; 2008</span>
+          <span class="project-tag">Feature Film</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/Sorority-Row.jpg" data-caption="The Strangers — storyboard">
+            <img src="content/uploads/2013/02/Sorority-Row.jpg" alt="The Strangers storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/Bridge-Scene-shooting-boards.jpg" data-caption="Bridge Scene — Shooting Boards">
+            <img src="content/uploads/2013/02/Bridge-Scene-shooting-boards.jpg" alt="Bridge scene shooting boards" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Homeland -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">Homeland</h2>
+          <span class="project-meta">Showtime &nbsp;·&nbsp; TV Series &nbsp;·&nbsp; 2012</span>
+          <span class="project-tag">Television</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/homeland2.jpg" data-caption="Homeland">
+            <img src="content/uploads/2013/02/homeland2.jpg" alt="Homeland storyboard" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- The Secret Life of Bees -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">The Secret Life of Bees</h2>
+          <span class="project-meta">Fox Searchlight &nbsp;·&nbsp; 2008</span>
+          <span class="project-tag">Feature Film</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/Black-Eyed-Susan-Film-Page4-e1361454353593.jpg" data-caption="The Secret Life of Bees — Page 4">
+            <img src="content/uploads/2013/02/Black-Eyed-Susan-Film-Page4-e1361454353593.jpg" alt="The Secret Life of Bees storyboard page 4" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <!-- Misc / Process -->
+      <div class="project-block reveal">
+        <div class="project-header">
+          <h2 class="project-title">Process &amp; Additional Work</h2>
+          <span class="project-meta">Various productions</span>
+        </div>
+        <div class="img-grid">
+          <div class="img-item" data-src="content/uploads/2013/02/TonalBoard.jpg" data-caption="Tonal Board">
+            <img src="content/uploads/2013/02/TonalBoard.jpg" alt="Tonal storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/CanyonCamp.jpg" data-caption="Canyon Camp">
+            <img src="content/uploads/2013/02/CanyonCamp.jpg" alt="Canyon camp storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/Camp.jpg" data-caption="Camp">
+            <img src="content/uploads/2013/02/Camp.jpg" alt="Camp storyboard" loading="lazy">
+          </div>
+          <div class="img-item" data-src="content/uploads/2013/02/1Color.jpg" data-caption="Animatic Still Frame">
+            <img src="content/uploads/2013/02/1Color.jpg" alt="Animatic still frame" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- COMMISSION BAND -->
+  <div class="commission-band">
+    <div class="container commission-inner">
+      <h2 class="commission-heading reveal">Available for <em>Commissions</em></h2>
+      <a href="about.html#commissions" class="btn btn-primary reveal reveal-delay-1">Email About a Commission</a>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logo-wrap">
+          <a href="index.html" class="footer-logo" aria-label="Craig Gilmore — Home">
+            <img src="images/craig-logo-white-nobg.webp" alt="Craig Gilmore">
+          </a>
+          <div class="footer-logo-sub">Comic Book Creator &amp; Storyboard Artist</div>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="index.html">Home</a>
+          <a href="storyboards.html">Storyboards</a>
+          <a href="concept-art.html">Concept Art</a>
+          <a href="comics.html">Comics</a>
+          <a href="ethereal.html">Ethereal: A Tale</a>
+          <a href="about.html">About</a>
+          <a href="news.html">News</a>
+          <a href="https://craiggilmore.square.site" target="_blank" rel="noopener">Original Art Store ↗</a>
+        </nav>
+        <div class="footer-social" aria-label="Social media">
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.748-8.84L1.254 2.25H8.08l4.262 5.633 5.902-5.633zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X (Twitter)
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a href="#" class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          Copyright &copy;1990–2025 Craig Gilmore and/or their respective holders. May not be reused or reprinted without permission. All contents of this site are protected under
+          <a href="https://www.copyright.gov/" target="_blank" rel="noopener">intellectual property</a> laws.<br>
+          Ethereal: A Tale logo designed by Chris Clark /
+          <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>.
+        </p>
+        <p class="footer-circa">
+          Site design by <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox-close" id="lightbox-close">Close ✕</button>
+    <img id="lightbox-img" src="" alt="">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Scroll reveal
+      const revealEls = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08 });
+        revealEls.forEach(function (el) { observer.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      // Sticky header
+      var header = document.querySelector('.site-header');
+      window.addEventListener('scroll', function () {
+        header.style.background = window.scrollY > 40 ? 'rgba(9,9,9,0.97)' : 'rgba(9,9,9,0.88)';
+      }, { passive: true });
+
+      // Lightbox
+      var lightbox  = document.getElementById('lightbox');
+      var lbImg     = document.getElementById('lightbox-img');
+      var lbCaption = document.getElementById('lightbox-caption');
+      var lbClose   = document.getElementById('lightbox-close');
+
+      document.querySelectorAll('.img-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+          lbImg.src = item.dataset.src;
+          lbImg.alt = item.querySelector('img').alt;
+          lbCaption.textContent = item.dataset.caption || '';
+          lightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      lbClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+  </script>
+
+</body>
+</html>
