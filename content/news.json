@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "date": "2025-06-01",
+    "headline": "Sample News Post",
+    "excerpt": "This is a short summary of the news item that appears on the card. Keep it to a sentence or two.",
+    "tags": ["Comics", "Announcement"],
+    "image": "",
+    "body": "<p>This is the full content of the news post. Replace this with the actual content Craig sends you.</p><p>You can include multiple paragraphs, <strong>bold text</strong>, <em>italics</em>, and <a href=\"#\">links</a>.</p>"
+  }
+]
