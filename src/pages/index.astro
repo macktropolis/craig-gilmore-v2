@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Craig Gilmore — Comic Book Creator & Storyboard Artist"
+  description="Official website of Craig Gilmore, veteran comic book creator, storyboard artist, and illustrator. 38 years of work in film, television, video games, and publishing."
+>
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero" aria-label="Introduction">
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Illustrator &amp; Artist</p>
+
+      <h1 class="hero-name">
+        <span class="hero-name-text"><span class="name-first">Craig</span><span class="name-last">Gilmore</span></span>
+      </h1>
+
+      <p class="hero-roles">
+        Comic Book Creator
+        <span class="dot" aria-hidden="true">·</span>
+        Storyboard Artist
+        <span class="dot" aria-hidden="true">·</span>
+        Illustrator
+      </p>
+
+      <p class="hero-bio">
+        38-year veteran of comic books, motion picture, television, and video game illustration. Based in Bolivia, NC — working worldwide.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+        <a href="/ethereal/" class="btn btn-outline">Ethereal: A Tale</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <img src="/images/ethereal-logo-final.jpg" alt="Featured artwork">
+    </div>
+
+    <p class="scroll-hint" aria-hidden="true">Scroll</p>
+
+  </section>
+
+  <!-- ============================================================
+       PORTFOLIO SECTION
+       ============================================================ -->
+  <section class="portfolio-section" id="portfolio" aria-label="Portfolio">
+    <div class="container">
+
+      <div class="portfolio-header">
+        <div class="reveal">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title">Portfolio</h2>
+        </div>
+        <a href="/storyboards/" class="btn btn-outline reveal reveal-delay-1"
+           style="align-self:flex-end;">View All Work</a>
+      </div>
+
+      <div class="portfolio-grid">
+
+        <!-- STORYBOARDS — large left card -->
+        <a href="/storyboards/" class="p-card p-card--storyboards reveal">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Feature Work</p>
+            <h3 class="p-card-name">Storyboards</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- CONCEPT ART -->
+        <a href="/concept-art/" class="p-card p-card--concept reveal reveal-delay-1">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Development</p>
+            <h3 class="p-card-name">Concept Art</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- COMICS -->
+        <a href="/comics/" class="p-card p-card--comics reveal reveal-delay-2">
+          <div class="p-card-bg"></div>
+          <div class="p-card-overlay">
+            <p class="p-card-cat">Publishing</p>
+            <h3 class="p-card-name">Comics</h3>
+            <span class="p-card-arrow">
+              View Work
+              <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ETHEREAL: A TALE
+       ============================================================ -->
+  <section class="ethereal-section" aria-label="Ethereal: A Tale — graphic novel">
+    <div class="container">
+      <div class="ethereal-inner">
+
+        <div class="ethereal-visual reveal">
+          <!-- Replace with actual Ethereal cover art when available -->
+          <div class="ethereal-cover" aria-hidden="true">
+            <span class="cover-text">Ethereal:<br>A Tale</span>
+          </div>
+        </div>
+
+        <div class="ethereal-content">
+          <div class="ethereal-badge">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Now in Development
+          </div>
+
+          <p class="section-label reveal">Graphic Novel</p>
+          <h2 class="ethereal-title reveal reveal-delay-1">Ethereal:<br>A Tale</h2>
+          <p class="ethereal-subtitle reveal reveal-delay-2">An Original Graphic Novel by Craig Gilmore</p>
+
+          <p class="ethereal-desc reveal reveal-delay-3">
+            Craig's most ambitious creative work to date. Sign up to be notified about the official release announcement, preview art drops, and Kickstarter launch.
+          </p>
+
+          <div class="reveal reveal-delay-4">
+            <a href="/ethereal/" class="btn btn-primary">Get Notified of Release</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT SNIPPET
+       ============================================================ -->
+  <section class="about-section" aria-label="About Craig Gilmore">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-photo-wrap reveal">
+          <div class="about-photo">
+            <!-- Replace placeholder with actual photo: <img src="img/craig-gilmore.jpg" alt="Craig Gilmore"> -->
+            <div class="about-photo-placeholder" aria-label="Portrait of Craig Gilmore">CG</div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <p class="section-label reveal">About</p>
+          <h2 class="section-title reveal reveal-delay-1">38 Years<br>in the Industry</h2>
+
+          <div class="about-body reveal reveal-delay-2">
+            <p>
+              I am a 38-year veteran comic book creator and storyboard artist actively producing work for the motion picture, television, and video game industries, as well as advertising agencies and major comic book publishers.
+            </p>
+            <br>
+            <p>
+              Based in Bolivia, NC, I work from my home studio with a fully mobile kit for on-location and remote productions. I am a proud <strong>I.A.T.S.E.</strong> union artist, represented for personal appearances by <strong>Pearl Talent Management</strong>.
+            </p>
+          </div>
+
+          <div class="about-tags reveal reveal-delay-3">
+            <span class="tag">I.A.T.S.E. Union</span>
+            <span class="tag">Pearl Talent Management</span>
+            <span class="tag">Concept Illustration</span>
+            <span class="tag">Shooting Boards</span>
+            <span class="tag">Comic Books</span>
+            <span class="tag">Live Action</span>
+          </div>
+
+          <div class="about-ctas reveal reveal-delay-4">
+            <a href="/about/"    class="btn btn-outline">Full Bio &amp; Résumé</a>
+            <a href="/about/#commissions" class="btn btn-primary">Commission Info</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMMISSION BAND
+       ============================================================ -->
+  <div class="commission-band">
+    <div class="container commission-inner">
+      <h2 class="commission-heading reveal">
+        Available for <em>Commissions</em>
+      </h2>
+      <a href="/about/#commissions" class="btn btn-primary reveal reveal-delay-1">
+        Email About a Commission
+      </a>
+    </div>
+  </div>
+</BaseLayout>

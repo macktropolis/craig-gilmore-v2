@@ -1,0 +1,44 @@
+---
+import { footerNav, social, STORE_URL } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-logo-wrap">
+        <a href="/" class="footer-logo" aria-label="Craig Gilmore — Home">
+          <img src="/images/craig-logo-white-nobg.webp" alt="Craig Gilmore" />
+        </a>
+        <div class="footer-logo-sub">Comic Book Creator &amp; Storyboard Artist</div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        {footerNav.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href={STORE_URL} target="_blank" rel="noopener">Original Art Store ↗</a>
+      </nav>
+
+      <div class="footer-social" aria-label="Social media">
+        {social.map((s) => (
+          <a href={s.href} class="footer-social-link" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.path} /></svg>
+            {s.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        Copyright &copy;1990–{year} Craig Gilmore and/or their respective holders. May not be reused or reprinted without permission. All contents of this site are protected under
+        <a href="https://www.copyright.gov/" target="_blank" rel="noopener">intellectual property</a> laws.<br />
+        Ethereal: A Tale logo designed by Chris Clark /
+        <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>.
+      </p>
+      <p class="footer-circa">
+        Site design by <a href="https://www.circa71.com" target="_blank" rel="noopener">Circa71 Digital Design</a>
+      </p>
+    </div>
+  </div>
+</footer>
