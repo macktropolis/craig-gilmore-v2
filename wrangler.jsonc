@@ -1,0 +1,11 @@
+// Cloudflare Workers config: serves the static Astro build from dist/.
+// Build command: npm run build   Deploy command: npx wrangler deploy
+{
+  "name": "craig-gilmore-v2",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    // Serve dist/404.html (when the site has one) for unknown URLs.
+    "not_found_handling": "404-page"
+  }
+}
