@@ -1,0 +1,35 @@
+---
+title: "Term Life"
+credit: "Director Peter Billingsley"
+date: 2014-02-21
+types: ["storyboards"]
+tags: ["feature-film"]
+cover: "/content/uploads/2014/02/termlifelogo-1.jpg"
+images:
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg"
+    caption: ""
+  - src: "/content/uploads/2014/02/termlifelogo-1.jpg"
+    caption: ""
+---

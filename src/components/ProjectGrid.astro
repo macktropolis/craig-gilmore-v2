@@ -1,0 +1,63 @@
+---
+// Grid of project cards linking to /portfolio/<slug>/, with optional tag filters.
+import { TAG_LABELS, projectUrl, type Project } from '../data/portfolio';
+
+interface Props {
+  projects: Project[];
+  filters?: boolean;
+}
+
+const { projects, filters = false } = Astro.props;
+const tags = [...new Set(projects.flatMap((p) => p.data.tags))].filter((t) => TAG_LABELS[t]).sort();
+---
+
+<div class="project-grid-wrap">
+  {
+    filters && tags.length > 1 && (
+      <div class="filter-bar" role="group" aria-label="Filter projects">
+        <button type="button" class="filter-btn is-active" data-filter="all" aria-pressed="true">All</button>
+        {tags.map((t) => (
+          <button type="button" class="filter-btn" data-filter={t} aria-pressed="false">{TAG_LABELS[t]}</button>
+        ))}
+      </div>
+    )
+  }
+
+  <div class="project-grid">
+    {
+      projects.map((p) => (
+        <a href={projectUrl(p)} class="project-card" data-tags={p.data.tags.join(' ')}>
+          <div class="project-card-img">
+            {p.data.cover ? <img src={p.data.cover} alt="" loading="lazy" /> : <span class="project-card-initial">{p.data.title[0]}</span>}
+          </div>
+          <div class="project-card-body">
+            <h3 class="project-card-title">{p.data.title}</h3>
+            {p.data.credit && <p class="project-card-credit">{p.data.credit}</p>}
+            <div class="project-card-tags">
+              {p.data.tags.filter((t) => TAG_LABELS[t]).map((t) => <span>{TAG_LABELS[t]}</span>)}
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.project-grid-wrap').forEach((wrap) => {
+    const buttons = wrap.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = wrap.querySelectorAll<HTMLElement>('.project-card');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const f = btn.dataset.filter!;
+        buttons.forEach((b) => {
+          b.classList.toggle('is-active', b === btn);
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        cards.forEach((card) => {
+          card.hidden = f !== 'all' && !(card.dataset.tags ?? '').split(' ').includes(f);
+        });
+      });
+    });
+  });
+</script>

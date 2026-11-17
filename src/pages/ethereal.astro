@@ -1,0 +1,79 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import '../styles/gallery.css';
+
+const project = await getEntry('portfolio', 'ethereal-a-tale-an-original-graphic-novel-by-craig-gilmore');
+const images = project?.data.images ?? [];
+---
+
+<BaseLayout
+  title="Ethereal: A Tale — Craig Gilmore"
+  description="Ethereal: A Tale, an original graphic novel by Craig Gilmore. See preview art and sign up to hear about the release and Kickstarter launch."
+>
+  <div class="page-banner">
+    <div class="container">
+      <div class="page-banner-inner">
+        <div>
+          <p class="page-banner-label">Graphic Novel</p>
+          <h1 class="page-banner-title">Ethereal: A Tale</h1>
+        </div>
+        <p class="page-banner-note">An original graphic novel by Craig Gilmore.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="ethereal-section ethereal-page-intro" aria-label="About Ethereal: A Tale">
+    <div class="container">
+      <div class="ethereal-inner">
+        <div class="ethereal-visual reveal">
+          <img class="ethereal-logo-img" src="/images/ethereal-logo-final.jpg" alt="Ethereal: A Tale logo" />
+        </div>
+
+        <div class="ethereal-content" id="signup">
+          <div class="ethereal-badge">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            Now in Development
+          </div>
+          <p class="section-label reveal">Be the First to Know</p>
+          <h2 class="ethereal-title reveal reveal-delay-1">Get Release<br />Updates</h2>
+          <p class="ethereal-desc reveal reveal-delay-2">
+            Craig's most ambitious creative work to date. Sign up to hear about the progress and publication of
+            <em>Ethereal: A Tale</em> — preview art drops, the official release announcement and the Kickstarter launch.
+          </p>
+          <!-- TODO: replace this button with the Brevo signup form embed once it's created in Brevo. -->
+          <div class="reveal reveal-delay-3">
+            <a href="mailto:craig@craiggilmore.net?subject=Ethereal%3A%20A%20Tale%20updates" class="btn btn-primary">Get Notified of Release</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {images.length > 0 && (
+    <section class="gallery-section">
+      <div class="container">
+        <div class="project-header">
+          <h2 class="project-title">Preview Art</h2>
+          <span class="project-meta">Promotional illustrations</span>
+        </div>
+        <div class="img-grid img-grid--natural ethereal-grid">
+          {images.map((img, i) => (
+            <div class="img-item" data-src={img.src} data-caption={img.caption || `Ethereal: A Tale — preview ${i + 1}`}>
+              <img src={img.src} alt={img.caption || `Ethereal: A Tale preview art ${i + 1}`} loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Lightbox />
+</BaseLayout>
+
+<style is:global>
+  .ethereal-page-intro { border-bottom: 1px solid var(--border); }
+  .ethereal-logo-img { width: 100%; border-radius: 4px; display: block; }
+  .ethereal-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); align-items: start; }
+</style>

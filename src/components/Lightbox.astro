@@ -1,0 +1,59 @@
+---
+// Full-screen image viewer for any `.img-item` on the page.
+// Each item needs data-src (full image) and optional data-caption.
+// Arrow keys step through the items in the same `.img-grid`.
+---
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" id="lightbox-close">Close ✕</button>
+  <img id="lightbox-img" src="" alt="" />
+  <p class="lightbox-caption" id="lightbox-caption"></p>
+</div>
+
+<script>
+  const lightbox = document.getElementById('lightbox')!;
+  const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lbCaption = document.getElementById('lightbox-caption')!;
+  const lbClose = document.getElementById('lightbox-close')!;
+  let current: HTMLElement | null = null;
+
+  function show(item: HTMLElement) {
+    current = item;
+    lbImg.src = item.dataset.src ?? '';
+    lbImg.alt = item.querySelector('img')?.alt ?? '';
+    lbCaption.textContent = item.dataset.caption || '';
+  }
+
+  function step(dir: 1 | -1) {
+    if (!current) return;
+    const items = Array.from(current.closest('.img-grid')?.querySelectorAll<HTMLElement>('.img-item') ?? []);
+    const next = items[items.indexOf(current) + dir];
+    if (next) show(next);
+  }
+
+  function close() {
+    lightbox.classList.remove('is-open');
+    lbImg.src = '';
+    current = null;
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLElement>('.img-item').forEach((item) => {
+    item.addEventListener('click', () => {
+      show(item);
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  lbClose.addEventListener('click', close);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+</script>

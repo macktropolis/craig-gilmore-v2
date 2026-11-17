@@ -1,0 +1,99 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { getProjects, TAG_LABELS, TYPE_LABELS, PUBLISHERS, type Project } from '../../data/portfolio';
+import '../../styles/gallery.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props as { project: Project };
+const { title, credit, types, tags, publisher, images, videos } = project.data;
+const { Content } = await render(project);
+
+// Where "back" goes: the most specific section this project belongs to.
+const section = tags.includes('ethereal')
+  ? { href: '/ethereal/', label: 'Ethereal: A Tale' }
+  : types.includes('comics')
+    ? { href: '/comics/', label: 'Comics' }
+    : types.includes('storyboards')
+      ? { href: '/storyboards/', label: 'Storyboards' }
+      : types.includes('concept-art')
+        ? { href: '/concept-art/', label: 'Concept Art' }
+        : { href: '/portfolio/', label: 'Portfolio' };
+
+const label = [
+  ...types.map((t) => TYPE_LABELS[t]),
+  PUBLISHERS.find((p) => p.id === publisher)?.label,
+].filter(Boolean).join(' · ') || 'Portfolio';
+const tagLabels = tags.map((t) => TAG_LABELS[t]).filter(Boolean);
+const description = `${title}${credit ? ` — ${credit}` : ''}. ${label} by Craig Gilmore.`;
+const isSingle = images.length === 1;
+---
+
+<BaseLayout title={`${title} — Craig Gilmore`} description={description}>
+  <div class="page-banner">
+    <div class="container">
+      <div class="page-banner-inner">
+        <div>
+          <p class="page-banner-label">{label}</p>
+          <h1 class="page-banner-title project-page-title">{title}</h1>
+        </div>
+        {credit && <p class="page-banner-note">{credit}</p>}
+      </div>
+    </div>
+  </div>
+
+  <section class="gallery-section">
+    <div class="container">
+      <a href={section.href} class="back-link">← {section.label}</a>
+
+      {tagLabels.length > 0 && (
+        <div class="project-card-tags project-page-tags">
+          {tagLabels.map((t) => <span>{t}</span>)}
+        </div>
+      )}
+
+      <div class="project-desc"><Content /></div>
+
+      {videos.length > 0 && (
+        <div class="video-grid">
+          {videos.map((id) => (
+            <div class="video-embed">
+              <iframe src={`https://www.youtube-nocookie.com/embed/${id}`} title={`${title} video`} loading="lazy" allowfullscreen></iframe>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {images.length > 0 && (
+        <div class:list={['img-grid', 'img-grid--natural', { 'img-grid--single': isSingle }]}>
+          {images.map((img, i) => (
+            <div class="img-item" data-src={img.src} data-caption={img.caption}>
+              <img src={img.src} alt={img.caption || `${title} — image ${i + 1}`} loading={i < 6 ? 'eager' : 'lazy'} />
+              {img.caption && <span class="img-item-caption">{img.caption}</span>}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <div class="commission-band">
+    <div class="container commission-inner">
+      <h2 class="commission-heading">Available for <em>Commissions</em></h2>
+      <a href="/about/#commissions" class="btn btn-primary">Email About a Commission</a>
+    </div>
+  </div>
+
+  <Lightbox />
+</BaseLayout>
+
+<style is:global>
+  .project-page-title { font-size: clamp(2.25rem, 5.5vw, 4.5rem); }
+  .project-page-tags { margin: 0 0 1.5rem; }
+  .img-grid--single { grid-template-columns: minmax(0, 560px); }
+</style>

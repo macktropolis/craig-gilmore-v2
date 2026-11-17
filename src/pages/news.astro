@@ -397,6 +397,8 @@ const formatDate = (d: Date) =>
     .modal-content strong { color: var(--text); font-weight: 500; }
     .modal-content a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
     .modal-content img { max-width: 100%; border-radius: 3px; margin: 1rem 0; }
+    .modal-content .video-embed { aspect-ratio: 16 / 9; margin: 1rem 0; border-radius: 3px; overflow: hidden; background: var(--surface-hi); }
+    .modal-content .video-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
 
     @media (max-width: 640px) {
       .news-grid { grid-template-columns: 1fr; }
@@ -455,6 +457,10 @@ const formatDate = (d: Date) =>
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
+
+  // Old blog URLs redirect to /news/#<post-slug>; open that post.
+  const linked = cards.find((c) => c.dataset.id === decodeURIComponent(location.hash.slice(1)));
+  if (linked) openModal(linked);
 
   document.getElementById('news-search')!.addEventListener('input', (e) => {
     const q = (e.target as HTMLInputElement).value.trim().toLowerCase();

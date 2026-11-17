@@ -1,0 +1,30 @@
+# Old WordPress URLs -> new site. Format: <from> <to> <status>
+# Works on both Cloudflare and Netlify.
+
+# Uploaded media
+/wp-content/uploads/*      /content/uploads/:splat          301
+
+# Pages folded into About
+/bio/                      /about/                          301
+/commissions/              /about/#commissions              301
+/resume/                   /about/#credits                  301
+
+# Portfolio indexes
+/home/                     /                                301
+/portfolio-all/            /portfolio/                      301
+/dc-comics/                /comics/#dc                      301
+/marvel-comics/            /comics/#marvel                  301
+/other-comic-books/        /comics/#other                   301
+/portfolio-tags/*          /portfolio/                      301
+/portfolio_types/*         /portfolio/                      301
+/companies/*               /comics/                         301
+
+# Blog -> News (each post opens in the news popup)
+/blog/                     /news/                           301
+/amc-com-behind-the-walking-dead/ /news/#amc-com-behind-the-walking-dead 301
+/another-new-walking-dead-season-4-clip/ /news/#another-new-walking-dead-season-4-clip 301
+/art-for-heavy-metal-band-mx/ /news/#art-for-heavy-metal-band-mx    301
+/first-kill-premiere-on-netflix-6-10-22/ /news/#first-kill-premiere-on-netflix-6-10-22 301
+/heroes-convention-2024-guest-appearance/ /news/#heroes-convention-2024-guest-appearance 301
+/mother-mayhem-logomascot-design/ /news/#mother-mayhem-logomascot-design 301
+/new-storyboards-from-morbius-for-sony-marvel-studios/ /news/#new-storyboards-from-morbius-for-sony-marvel-studios 301
