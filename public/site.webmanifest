@@ -1,0 +1,11 @@
+{
+  "name": "Craig Gilmore",
+  "short_name": "Craig Gilmore",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "theme_color": "#090909",
+  "background_color": "#090909",
+  "display": "browser"
+}
