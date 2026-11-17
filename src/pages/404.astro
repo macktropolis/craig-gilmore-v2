@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/gallery.css';
+
+const links = [
+  { href: '/storyboards/', label: 'Storyboards' },
+  { href: '/concept-art/', label: 'Concept Art' },
+  { href: '/comics/', label: 'Comics' },
+  { href: '/ethereal/', label: 'Ethereal: A Tale' },
+  { href: '/about/', label: 'About' },
+  { href: '/news/', label: 'News' },
+];
+---
+
+<BaseLayout title="Page Not Found — Craig Gilmore" description="The page you're looking for couldn't be found.">
+  <meta slot="head" name="robots" content="noindex" />
+
+  <section class="notfound">
+    <div class="container notfound-inner">
+      <p class="page-banner-label">Error 404</p>
+      <h1 class="notfound-title">Page Not<br />Found</h1>
+      <p class="notfound-text">
+        This page doesn't exist, or it moved when the site was rebuilt. Try one of the sections below.
+      </p>
+
+      <div class="notfound-ctas">
+        <a href="/" class="btn btn-primary">Back to Home</a>
+        <a href="/portfolio/" class="btn btn-outline">View All Work</a>
+      </div>
+
+      <nav class="notfound-links" aria-label="Site sections">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .notfound {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: calc(var(--nav-h) + 4rem) 0 5rem;
+    background: radial-gradient(ellipse at 20% 40%, var(--accent-dim) 0%, transparent 60%);
+  }
+  .notfound-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 11vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .notfound-text {
+    max-width: 46ch;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .notfound-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem; }
+  .notfound-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    max-width: 640px;
+  }
+  .notfound-links a {
+    font-family: var(--font-cond);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.15s;
+  }
+  .notfound-links a:hover { color: var(--accent); }
+</style>
