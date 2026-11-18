@@ -2,6 +2,19 @@
 # Works on both Cloudflare and Netlify.
 
 # Uploaded media
+# Files whose names differ only by case from another upload were renamed *-alt.
+/wp-content/uploads/2013/02/pg1.jpg  /content/uploads/2013/02/pg1-alt.jpg  301
+/wp-content/uploads/2013/02/Pg1v2.jpg  /content/uploads/2013/02/pg1v2-alt.jpg  301
+/wp-content/uploads/2013/02/pg2.jpg  /content/uploads/2013/02/pg2-alt.jpg  301
+/wp-content/uploads/2013/02/Pg2v2.jpg  /content/uploads/2013/02/pg2v2-alt.jpg  301
+/wp-content/uploads/2013/02/pg3.jpg  /content/uploads/2013/02/pg3-alt.jpg  301
+/wp-content/uploads/2013/02/Pg3v2.jpg  /content/uploads/2013/02/pg3v2-alt.jpg  301
+/wp-content/uploads/2013/02/pg4.jpg  /content/uploads/2013/02/pg4-alt.jpg  301
+/wp-content/uploads/2013/02/Pg4v2.jpg  /content/uploads/2013/02/pg4v2-alt.jpg  301
+/wp-content/uploads/2013/02/Pg5v2.jpg  /content/uploads/2013/02/pg5v2-alt.jpg  301
+/wp-content/uploads/2013/02/Pg6v2.jpg  /content/uploads/2013/02/pg6v2-alt.jpg  301
+/wp-content/uploads/2013/02/Pg7v2.jpg  /content/uploads/2013/02/pg7v2-alt.jpg  301
+/wp-content/uploads/2013/02/Pg8v2.jpg  /content/uploads/2013/02/pg8v2-alt.jpg  301
 /wp-content/uploads/*      /content/uploads/:splat          301
 
 # Pages folded into About

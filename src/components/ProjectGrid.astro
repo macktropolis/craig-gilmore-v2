@@ -1,6 +1,7 @@
 ---
 // Grid of project cards linking to /portfolio/<slug>/, with optional tag filters.
 import { TAG_LABELS, projectUrl, type Project } from '../data/portfolio';
+import { thumb } from '../data/images';
 
 interface Props {
   projects: Project[];
@@ -28,7 +29,7 @@ const tags = [...new Set(projects.flatMap((p) => p.data.tags))].filter((t) => TA
       projects.map((p) => (
         <a href={projectUrl(p)} class="project-card" data-tags={p.data.tags.join(' ')}>
           <div class="project-card-img">
-            {p.data.cover ? <img src={p.data.cover} alt="" loading="lazy" /> : <span class="project-card-initial">{p.data.title[0]}</span>}
+            {p.data.cover ? <img {...thumb(p.data.cover)} alt="" loading="lazy" decoding="async" /> : <span class="project-card-initial">{p.data.title[0]}</span>}
           </div>
           <div class="project-card-body">
             <h3 class="project-card-title">{p.data.title}</h3>

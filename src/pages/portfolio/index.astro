@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
 import ProjectGrid from '../../components/ProjectGrid.astro';
 import { getProjects, TYPE_LABELS } from '../../data/portfolio';
 import '../../styles/gallery.css';
@@ -16,17 +17,9 @@ const groups = (['storyboards', 'concept-art'] as const).map((type) => ({
   title="Full Portfolio — Craig Gilmore"
   description="Every storyboard and concept art project by Craig Gilmore for feature film, television, video games and commercials."
 >
-  <div class="page-banner">
-    <div class="container">
-      <div class="page-banner-inner">
-        <div>
-          <p class="page-banner-label">Portfolio</p>
-          <h1 class="page-banner-title">Full Portfolio</h1>
-        </div>
-        <p class="page-banner-note">Every film, television, video game and commercial project. Comic book work is on the <a href="/comics/">Comics</a> page.</p>
-      </div>
-    </div>
-  </div>
+  <PageBanner label="Portfolio" title="Full Portfolio" image="/images/home/hero-swamp.webp" imagePosition="60% center">
+    <p slot="note">Every film, television, video game and commercial project. Comic book work is on the <a href="/comics/">Comics</a> page.</p>
+  </PageBanner>
 
   <section class="gallery-section">
     <div class="container">
@@ -43,6 +36,3 @@ const groups = (['storyboards', 'concept-art'] as const).map((type) => ({
   </section>
 </BaseLayout>
 
-<style is:global>
-  .page-banner-note a { color: var(--accent); }
-</style>

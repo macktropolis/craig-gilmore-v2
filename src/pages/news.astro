@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from '../components/PageBanner.astro';
+import { thumb } from '../data/images';
 
 const posts = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const rendered = await Promise.all(posts.map(async (post) => ({ post, Content: (await render(post)).Content })));
@@ -13,17 +15,7 @@ const formatDate = (d: Date) =>
   title="News — Craig Gilmore"
   description="The latest news from comic book creator and storyboard artist Craig Gilmore."
 >
-  <!-- PAGE BANNER -->
-  <div class="page-banner">
-    <div class="container">
-      <div class="page-banner-inner">
-        <div>
-          <p class="page-banner-label">Craig Gilmore</p>
-          <h1 class="page-banner-title">News</h1>
-        </div>
-      </div>
-    </div>
-  </div>
+  <PageBanner label="Craig Gilmore" title="News" image="/images/home/hero-rings.webp" imagePosition="center 40%" />
 
   <!-- NEWS -->
   <section class="news-section" aria-label="News">
@@ -50,7 +42,7 @@ const formatDate = (d: Date) =>
           >
             <div class="news-card-img">
               {post.data.image ? (
-                <img src={post.data.image} alt="" loading="lazy" />
+                <img {...thumb(post.data.image)} alt="" loading="lazy" decoding="async" />
               ) : (
                 <div class="news-card-img-placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -105,46 +97,6 @@ const formatDate = (d: Date) =>
 
 <style is:global>
     h1, h2, h3, h4, h5, h6 { font-weight: 400; }
-
-    /* Page banner */
-    .page-banner {
-      padding-top: var(--nav-h);
-      padding-bottom: 0;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-    .page-banner-inner {
-      display: flex;
-      align-items: flex-end;
-      gap: 2rem;
-      padding: clamp(3rem, 6vw, 5rem) 0 2rem;
-    }
-    .page-banner-label {
-      display: flex;
-      align-items: center;
-      gap: 0.625rem;
-      font-family: var(--font-cond);
-      font-size: 0.6875rem;
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-    .page-banner-label::before {
-      content: '';
-      display: block;
-      width: 22px; height: 2px;
-      background: var(--accent);
-    }
-    .page-banner-title {
-      font-family: var(--font-display);
-      text-transform: uppercase;
-      font-size: clamp(3rem, 7vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: 0.025em;
-      color: var(--text);
-    }
 
     /* News section */
     .news-section {
@@ -238,7 +190,7 @@ const formatDate = (d: Date) =>
     }
     .news-card-date {
       font-family: var(--font-cond);
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -251,7 +203,7 @@ const formatDate = (d: Date) =>
     }
     .news-card-tag {
       font-family: var(--font-cond);
-      font-size: 0.625rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -280,7 +232,7 @@ const formatDate = (d: Date) =>
       gap: 0.375rem;
       margin-top: 1rem;
       font-family: var(--font-cond);
-      font-size: 0.75rem;
+      font-size: 0.8125rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -354,7 +306,7 @@ const formatDate = (d: Date) =>
     }
     .modal-date {
       font-family: var(--font-cond);
-      font-size: 0.6875rem;
+      font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;

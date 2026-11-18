@@ -1,0 +1,38 @@
+---
+// Page heading used at the top of every inner page: label, big title, an
+// optional note on the right, and an optional piece of artwork that fades in
+// behind the right-hand side.
+interface Props {
+  label: string;
+  title: string;
+  note?: string;
+  image?: string;
+  /** CSS object-position for the artwork. */
+  imagePosition?: string;
+  titleClass?: string;
+}
+
+const { label, title, note, image, imagePosition = 'center', titleClass } = Astro.props;
+const hasNote = Boolean(note) || Astro.slots.has('note');
+---
+
+<div class:list={['page-banner', { 'page-banner--art': image }]}>
+  {image && (
+    <div class="page-banner-art" aria-hidden="true">
+      <img src={image} alt="" style={`object-position:${imagePosition}`} fetchpriority="high" />
+    </div>
+  )}
+  <div class="container">
+    <div class="page-banner-inner">
+      <div>
+        <p class="page-banner-label">{label}</p>
+        <h1 class:list={['page-banner-title', titleClass]}>{title}</h1>
+      </div>
+      {hasNote && (
+        <div class="page-banner-note">
+          <slot name="note">{note}</slot>
+        </div>
+      )}
+    </div>
+  </div>
+</div>

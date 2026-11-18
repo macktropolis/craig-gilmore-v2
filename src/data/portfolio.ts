@@ -34,3 +34,14 @@ export async function getProjects(filter?: (p: Project) => boolean): Promise<Pro
 }
 
 export const projectUrl = (p: Project) => `/portfolio/${p.id}/`;
+
+// The most specific section a project belongs to: where "back" goes, and the
+// set that previous/next step through.
+export function sectionOf(p: Project) {
+  const { tags, types } = p.data;
+  if (tags.includes('ethereal')) return { key: 'ethereal', href: '/ethereal/', label: 'Ethereal: A Tale' };
+  if (types.includes('comics')) return { key: 'comics', href: '/comics/', label: 'Comics' };
+  if (types.includes('storyboards')) return { key: 'storyboards', href: '/storyboards/', label: 'Storyboards' };
+  if (types.includes('concept-art')) return { key: 'concept-art', href: '/concept-art/', label: 'Concept Art' };
+  return { key: 'portfolio', href: '/portfolio/', label: 'Portfolio' };
+}

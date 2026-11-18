@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from '../components/PageBanner.astro';
 import Lightbox from '../components/Lightbox.astro';
 import '../styles/gallery.css';
 ---
@@ -8,18 +9,13 @@ import '../styles/gallery.css';
   title="Storyboards — Craig Gilmore"
   description="Storyboard work by Craig Gilmore for feature film, television, and video games — including The Walking Dead, Morbius, Stranger Things, and more."
 >
-  <!-- PAGE BANNER -->
-  <div class="page-banner">
-    <div class="container">
-      <div class="page-banner-inner">
-        <div>
-          <p class="page-banner-label">Portfolio</p>
-          <h1 class="page-banner-title">Storyboards</h1>
-        </div>
-        <p class="page-banner-note">Feature film, television, and video game storyboard work. Click any image to enlarge.</p>
-      </div>
-    </div>
-  </div>
+  <PageBanner
+    label="Portfolio"
+    title="Storyboards"
+    note="Feature film, television and video game storyboard work. Click any image to enlarge."
+    image="/images/home/card-storyboards.webp"
+    imagePosition="center 20%"
+  />
 
   <!-- GALLERY -->
   <section class="gallery-section">
@@ -34,34 +30,34 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid img-grid--sequence">
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_01.jpg" data-caption="Morbius — Page 01">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_01.jpg" alt="Morbius storyboard page 1" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_01.jpg.webp" width="638" height="825" alt="Morbius storyboard page 1" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_02.jpg" data-caption="Morbius — Page 02">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_02.jpg" alt="Morbius storyboard page 2" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_02.jpg.webp" width="638" height="825" alt="Morbius storyboard page 2" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_03.jpg" data-caption="Morbius — Page 03">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_03.jpg" alt="Morbius storyboard page 3" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_03.jpg.webp" width="638" height="825" alt="Morbius storyboard page 3" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_04.jpg" data-caption="Morbius — Page 04">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_04.jpg" alt="Morbius storyboard page 4" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_04.jpg.webp" width="638" height="825" alt="Morbius storyboard page 4" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_05.jpg" data-caption="Morbius — Page 05">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_05.jpg" alt="Morbius storyboard page 5" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_05.jpg.webp" width="638" height="825" alt="Morbius storyboard page 5" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_06.jpg" data-caption="Morbius — Page 06">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_06.jpg" alt="Morbius storyboard page 6" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_06.jpg.webp" width="638" height="825" alt="Morbius storyboard page 6" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_07.jpg" data-caption="Morbius — Page 07">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_07.jpg" alt="Morbius storyboard page 7" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_07.jpg.webp" width="638" height="825" alt="Morbius storyboard page 7" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_08.jpg" data-caption="Morbius — Page 08">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_08.jpg" alt="Morbius storyboard page 8" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_08.jpg.webp" width="638" height="825" alt="Morbius storyboard page 8" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_09.jpg" data-caption="Morbius — Page 09">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_09.jpg" alt="Morbius storyboard page 9" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_09.jpg.webp" width="638" height="825" alt="Morbius storyboard page 9" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_10.jpg" data-caption="Morbius — Page 10">
-            <img src="/content/uploads/2020/02/FINAL-BOARDS-REV-1_Page_10.jpg" alt="Morbius storyboard page 10" loading="lazy">
+            <img src="/content/thumbs/2020/02/FINAL-BOARDS-REV-1_Page_10.jpg.webp" width="638" height="825" alt="Morbius storyboard page 10" loading="lazy">
           </div>
         </div>
       </div>
@@ -75,16 +71,16 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/WalkingDead1.jpg" data-caption="The Walking Dead">
-            <img src="/content/uploads/2013/02/WalkingDead1.jpg" alt="The Walking Dead storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/WalkingDead1.jpg.webp" width="800" height="234" alt="The Walking Dead storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/DalesDeathBoards3-1.jpg" data-caption="Dale's Death — The Walking Dead">
-            <img src="/content/uploads/2013/02/DalesDeathBoards3-1.jpg" alt="Dale's Death storyboard — The Walking Dead" loading="lazy">
+            <img src="/content/thumbs/2013/02/DalesDeathBoards3-1.jpg.webp" width="465" height="640" alt="Dale's Death storyboard — The Walking Dead" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/Pg04f.jpg" data-caption="The Walking Dead Ep 211 — Page 04">
-            <img src="/content/uploads/2013/02/Pg04f.jpg" alt="The Walking Dead Episode 211 page 4" loading="lazy">
+            <img src="/content/thumbs/2013/02/Pg04f.jpg.webp" width="800" height="1100" alt="The Walking Dead Episode 211 page 4" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/03/Walking-Dead.jpg" data-caption="The Walking Dead">
-            <img src="/content/uploads/2013/03/Walking-Dead.jpg" alt="The Walking Dead storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/03/Walking-Dead.jpg.webp" width="800" height="234" alt="The Walking Dead storyboard" loading="lazy">
           </div>
         </div>
       </div>
@@ -98,40 +94,40 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid img-grid--sequence">
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 01">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 1" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_01_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 1" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 02">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 2" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_02_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 2" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 03">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 3" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_03_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 3" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 04">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 4" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_04_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 4" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 05">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 5" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_05_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 5" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 06">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 6" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_06_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 6" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 07">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 7" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_07_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 7" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 08">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 8" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_08_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 8" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 09">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 9" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_09_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 9" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 10">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 10" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_10_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 10" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 11">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 11" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_11_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 11" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg" data-caption="Prisoners — Scene 55, Page 12">
-            <img src="/content/uploads/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg" alt="Prisoners scene 55 storyboard page 12" loading="lazy">
+            <img src="/content/thumbs/2014/02/Scene55BoardsPass3_Page_12_Image_0001.jpg.webp" width="800" height="1040" alt="Prisoners scene 55 storyboard page 12" loading="lazy">
           </div>
         </div>
       </div>
@@ -145,10 +141,10 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/RevolutionStairs.jpg" data-caption="Revolution — Stairs">
-            <img src="/content/uploads/2013/02/RevolutionStairs.jpg" alt="Revolution NBC storyboard — stairs sequence" loading="lazy">
+            <img src="/content/thumbs/2013/02/RevolutionStairs.jpg.webp" width="800" height="234" alt="Revolution NBC storyboard — stairs sequence" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/INTERIOR-STAIRS.jpg" data-caption="Revolution — Interior Stairs">
-            <img src="/content/uploads/2013/02/INTERIOR-STAIRS.jpg" alt="Revolution NBC storyboard — interior stairs" loading="lazy">
+            <img src="/content/thumbs/2013/02/INTERIOR-STAIRS.jpg.webp" width="800" height="533" alt="Revolution NBC storyboard — interior stairs" loading="lazy">
           </div>
         </div>
       </div>
@@ -162,13 +158,13 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/KarensCafeTest.jpg" data-caption="One Tree Hill — Karen's Café">
-            <img src="/content/uploads/2013/02/KarensCafeTest.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/KarensCafeTest.jpg.webp" width="800" height="234" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/KarensCafe.jpg" data-caption="One Tree Hill — Karen's Café">
-            <img src="/content/uploads/2013/02/KarensCafe.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/KarensCafe.jpg.webp" width="800" height="234" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/KarensCafe1.jpg" data-caption="One Tree Hill — Karen's Café">
-            <img src="/content/uploads/2013/02/KarensCafe1.jpg" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/KarensCafe1.jpg.webp" width="800" height="481" alt="One Tree Hill — Karen's Café storyboard" loading="lazy">
           </div>
         </div>
       </div>
@@ -182,10 +178,10 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/Sorority-Row.jpg" data-caption="The Strangers — storyboard">
-            <img src="/content/uploads/2013/02/Sorority-Row.jpg" alt="The Strangers storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/Sorority-Row.jpg.webp" width="800" height="234" alt="The Strangers storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/Bridge-Scene-shooting-boards.jpg" data-caption="Bridge Scene — Shooting Boards">
-            <img src="/content/uploads/2013/02/Bridge-Scene-shooting-boards.jpg" alt="Bridge scene shooting boards" loading="lazy">
+            <img src="/content/thumbs/2013/02/Bridge-Scene-shooting-boards.jpg.webp" width="800" height="600" alt="Bridge scene shooting boards" loading="lazy">
           </div>
         </div>
       </div>
@@ -199,7 +195,7 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/homeland2.jpg" data-caption="Homeland">
-            <img src="/content/uploads/2013/02/homeland2.jpg" alt="Homeland storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/homeland2.jpg.webp" width="500" height="672" alt="Homeland storyboard" loading="lazy">
           </div>
         </div>
       </div>
@@ -213,7 +209,7 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/Black-Eyed-Susan-Film-Page4-e1361454353593.jpg" data-caption="The Secret Life of Bees — Page 4">
-            <img src="/content/uploads/2013/02/Black-Eyed-Susan-Film-Page4-e1361454353593.jpg" alt="The Secret Life of Bees storyboard page 4" loading="lazy">
+            <img src="/content/thumbs/2013/02/Black-Eyed-Susan-Film-Page4-e1361454353593.jpg.webp" width="600" height="462" alt="The Secret Life of Bees storyboard page 4" loading="lazy">
           </div>
         </div>
       </div>
@@ -226,16 +222,16 @@ import '../styles/gallery.css';
         </div>
         <div class="img-grid">
           <div class="img-item" data-src="/content/uploads/2013/02/TonalBoard.jpg" data-caption="Tonal Board">
-            <img src="/content/uploads/2013/02/TonalBoard.jpg" alt="Tonal storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/TonalBoard.jpg.webp" width="800" height="338" alt="Tonal storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/CanyonCamp.jpg" data-caption="Canyon Camp">
-            <img src="/content/uploads/2013/02/CanyonCamp.jpg" alt="Canyon camp storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/CanyonCamp.jpg.webp" width="622" height="436" alt="Canyon camp storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/Camp.jpg" data-caption="Camp">
-            <img src="/content/uploads/2013/02/Camp.jpg" alt="Camp storyboard" loading="lazy">
+            <img src="/content/thumbs/2013/02/Camp.jpg.webp" width="800" height="234" alt="Camp storyboard" loading="lazy">
           </div>
           <div class="img-item" data-src="/content/uploads/2013/02/1Color.jpg" data-caption="Animatic Still Frame">
-            <img src="/content/uploads/2013/02/1Color.jpg" alt="Animatic still frame" loading="lazy">
+            <img src="/content/thumbs/2013/02/1Color.jpg.webp" width="800" height="471" alt="Animatic still frame" loading="lazy">
           </div>
         </div>
       </div>

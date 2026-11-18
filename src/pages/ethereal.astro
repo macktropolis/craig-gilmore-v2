@@ -1,7 +1,9 @@
 ---
 import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageBanner from '../components/PageBanner.astro';
 import Lightbox from '../components/Lightbox.astro';
+import { thumb } from '../data/images';
 import { BREVO_FORM_URL } from '../data/site';
 import '../styles/gallery.css';
 
@@ -13,17 +15,13 @@ const images = project?.data.images ?? [];
   title="Ethereal: A Tale — Craig Gilmore"
   description="Ethereal: A Tale, an original graphic novel by Craig Gilmore. See preview art and sign up to hear about the release and Kickstarter launch."
 >
-  <div class="page-banner">
-    <div class="container">
-      <div class="page-banner-inner">
-        <div>
-          <p class="page-banner-label">Graphic Novel</p>
-          <h1 class="page-banner-title">Ethereal: A Tale</h1>
-        </div>
-        <p class="page-banner-note">An original graphic novel by Craig Gilmore.</p>
-      </div>
-    </div>
-  </div>
+  <PageBanner
+    label="Graphic Novel"
+    title="Ethereal: A Tale"
+    note="An original graphic novel by Craig Gilmore."
+    image={thumb('/content/uploads/2022/06/FinalPromo03ColorNewLogoSMALL-1.jpg').src}
+    imagePosition="center 35%"
+  />
 
   <section class="ethereal-section ethereal-page-intro" aria-label="About Ethereal: A Tale">
     <div class="container">
@@ -80,7 +78,7 @@ const images = project?.data.images ?? [];
         <div class="img-grid img-grid--natural ethereal-grid">
           {images.map((img, i) => (
             <div class="img-item" data-src={img.src} data-caption={img.caption || `Ethereal: A Tale — preview ${i + 1}`}>
-              <img src={img.src} alt={img.caption || `Ethereal: A Tale preview art ${i + 1}`} loading="lazy" />
+              <img {...thumb(img.src)} alt={img.caption || `Ethereal: A Tale preview art ${i + 1}`} loading="lazy" decoding="async" />
             </div>
           ))}
         </div>

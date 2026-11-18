@@ -1,29 +1,29 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageBanner from '../../components/PageBanner.astro';
 import Lightbox from '../../components/Lightbox.astro';
-import { getProjects, TAG_LABELS, TYPE_LABELS, PUBLISHERS, type Project } from '../../data/portfolio';
+import { thumb } from '../../data/images';
+import { getProjects, projectUrl, sectionOf, TAG_LABELS, TYPE_LABELS, PUBLISHERS, type Project } from '../../data/portfolio';
 import '../../styles/gallery.css';
 
 export async function getStaticPaths() {
   const projects = await getProjects();
-  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+  return projects.map((project) => {
+    const key = sectionOf(project).key;
+    const siblings = projects.filter((p) => sectionOf(p).key === key);
+    const i = siblings.indexOf(project);
+    return {
+      params: { slug: project.id },
+      props: { project, prev: siblings[i - 1] ?? null, next: siblings[i + 1] ?? null },
+    };
+  });
 }
 
-const { project } = Astro.props as { project: Project };
-const { title, credit, types, tags, publisher, images, videos } = project.data;
+const { project, prev, next } = Astro.props as { project: Project; prev: Project | null; next: Project | null };
+const { title, credit, types, tags, publisher, cover, images, videos } = project.data;
 const { Content } = await render(project);
-
-// Where "back" goes: the most specific section this project belongs to.
-const section = tags.includes('ethereal')
-  ? { href: '/ethereal/', label: 'Ethereal: A Tale' }
-  : types.includes('comics')
-    ? { href: '/comics/', label: 'Comics' }
-    : types.includes('storyboards')
-      ? { href: '/storyboards/', label: 'Storyboards' }
-      : types.includes('concept-art')
-        ? { href: '/concept-art/', label: 'Concept Art' }
-        : { href: '/portfolio/', label: 'Portfolio' };
+const section = sectionOf(project);
 
 const label = [
   ...types.map((t) => TYPE_LABELS[t]),
@@ -32,30 +32,26 @@ const label = [
 const tagLabels = tags.map((t) => TAG_LABELS[t]).filter(Boolean);
 const description = `${title}${credit ? ` — ${credit}` : ''}. ${label} by Craig Gilmore.`;
 const isSingle = images.length === 1;
+const bannerArt = cover ? thumb(cover).src : images[0] ? thumb(images[0].src).src : undefined;
+const neighbours = [
+  prev && { dir: 'Previous', project: prev },
+  next && { dir: 'Next', project: next },
+].filter(Boolean) as { dir: string; project: Project }[];
 ---
 
 <BaseLayout title={`${title} — Craig Gilmore`} description={description}>
-  <div class="page-banner">
+  <PageBanner label={label} title={title} note={credit} image={bannerArt} titleClass="project-page-title" />
+
+  <section class="gallery-section project-page">
     <div class="container">
-      <div class="page-banner-inner">
-        <div>
-          <p class="page-banner-label">{label}</p>
-          <h1 class="page-banner-title project-page-title">{title}</h1>
-        </div>
-        {credit && <p class="page-banner-note">{credit}</p>}
+      <div class="project-page-meta">
+        <a href={section.href} class="back-link">← {section.label}</a>
+        {tagLabels.length > 0 && (
+          <div class="project-card-tags project-page-tags">
+            {tagLabels.map((t) => <span>{t}</span>)}
+          </div>
+        )}
       </div>
-    </div>
-  </div>
-
-  <section class="gallery-section">
-    <div class="container">
-      <a href={section.href} class="back-link">← {section.label}</a>
-
-      {tagLabels.length > 0 && (
-        <div class="project-card-tags project-page-tags">
-          {tagLabels.map((t) => <span>{t}</span>)}
-        </div>
-      )}
 
       <div class="project-desc"><Content /></div>
 
@@ -72,12 +68,26 @@ const isSingle = images.length === 1;
       {images.length > 0 && (
         <div class:list={['img-grid', 'img-grid--natural', { 'img-grid--single': isSingle }]}>
           {images.map((img, i) => (
-            <div class="img-item" data-src={img.src} data-caption={img.caption}>
-              <img src={img.src} alt={img.caption || `${title} — image ${i + 1}`} loading={i < 6 ? 'eager' : 'lazy'} />
+            <div class="img-item" data-src={img.src} data-caption={img.caption || title}>
+              <img {...thumb(img.src)} alt={img.caption || `${title} — image ${i + 1}`} loading={i < 6 ? 'eager' : 'lazy'} decoding="async" />
               {img.caption && <span class="img-item-caption">{img.caption}</span>}
             </div>
           ))}
         </div>
+      )}
+
+      {neighbours.length > 0 && (
+        <nav class="project-pager" aria-label={`More ${section.label}`}>
+          {neighbours.map(({ dir, project: p }) => (
+            <a href={projectUrl(p)} class:list={['project-pager-link', `is-${dir.toLowerCase()}`]}>
+              {p.data.cover && <img {...thumb(p.data.cover)} alt="" loading="lazy" decoding="async" />}
+              <span class="project-pager-text">
+                <span class="project-pager-dir">{dir === 'Previous' ? `← ${dir}` : `${dir} →`}</span>
+                <span class="project-pager-title">{p.data.title}</span>
+              </span>
+            </a>
+          ))}
+        </nav>
       )}
     </div>
   </section>
@@ -93,7 +103,60 @@ const isSingle = images.length === 1;
 </BaseLayout>
 
 <style is:global>
-  .project-page-title { font-size: clamp(2.25rem, 5.5vw, 4.5rem); }
-  .project-page-tags { margin: 0 0 1.5rem; }
-  .img-grid--single { grid-template-columns: minmax(0, 560px); }
+  .project-page-title { font-size: clamp(2.5rem, 6vw, 5rem); max-width: 18ch; }
+  .project-page-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .project-page-meta .back-link { margin-bottom: 0; }
+  .project-page-tags { margin: 0; padding: 0; }
+  .img-grid--single { grid-template-columns: minmax(0, 720px); }
+
+  .project-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .project-pager-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface);
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .project-pager-link:hover { border-color: var(--border-hi); background: var(--surface-hi); }
+  .project-pager-link.is-next { grid-column: 2; flex-direction: row-reverse; text-align: right; }
+  .project-pager-link img { width: 96px; height: 64px; object-fit: cover; border-radius: 3px; flex-shrink: 0; }
+  .project-pager-text { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+  .project-pager-dir {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-hi);
+  }
+  .project-pager-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 640px) {
+    .project-pager { grid-template-columns: 1fr; }
+    .project-pager-link.is-next { grid-column: auto; }
+    .project-pager-link img { width: 72px; height: 52px; }
+  }
 </style>

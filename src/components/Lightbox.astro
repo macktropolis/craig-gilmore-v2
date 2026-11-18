@@ -1,59 +1,113 @@
 ---
 // Full-screen image viewer for any `.img-item` on the page.
 // Each item needs data-src (full image) and optional data-caption.
-// Arrow keys step through the items in the same `.img-grid`.
+// Items are keyboard-focusable; arrow keys and the side buttons step through
+// the items in the same `.img-grid`.
 ---
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
-  <button class="lightbox-close" id="lightbox-close">Close ✕</button>
-  <img id="lightbox-img" src="" alt="" />
-  <p class="lightbox-caption" id="lightbox-caption"></p>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+  <button type="button" class="lightbox-close" id="lightbox-close">Close <span aria-hidden="true">✕</span></button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19" /></svg>
+  </button>
+  <figure class="lightbox-figure">
+    <img id="lightbox-img" src="" alt="" />
+    <figcaption class="lightbox-caption">
+      <span id="lightbox-caption"></span>
+      <span class="lightbox-count" id="lightbox-count"></span>
+    </figcaption>
+  </figure>
+  <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 5 16 12 9 19" /></svg>
+  </button>
 </div>
 
 <script>
   const lightbox = document.getElementById('lightbox')!;
   const lbImg = document.getElementById('lightbox-img') as HTMLImageElement;
   const lbCaption = document.getElementById('lightbox-caption')!;
+  const lbCount = document.getElementById('lightbox-count')!;
   const lbClose = document.getElementById('lightbox-close')!;
+  const lbPrev = document.getElementById('lightbox-prev') as HTMLButtonElement;
+  const lbNext = document.getElementById('lightbox-next') as HTMLButtonElement;
   let current: HTMLElement | null = null;
+  let opener: HTMLElement | null = null;
+
+  const siblings = (item: HTMLElement) =>
+    Array.from(item.closest('.img-grid')?.querySelectorAll<HTMLElement>('.img-item') ?? [item]);
 
   function show(item: HTMLElement) {
     current = item;
+    const items = siblings(item);
+    const i = items.indexOf(item);
+    lbImg.classList.add('is-loading');
+    lbImg.onload = () => lbImg.classList.remove('is-loading');
     lbImg.src = item.dataset.src ?? '';
     lbImg.alt = item.querySelector('img')?.alt ?? '';
     lbCaption.textContent = item.dataset.caption || '';
+    lbCount.textContent = items.length > 1 ? `${i + 1} / ${items.length}` : '';
+    lbPrev.hidden = i <= 0;
+    lbNext.hidden = i >= items.length - 1;
   }
 
   function step(dir: 1 | -1) {
     if (!current) return;
-    const items = Array.from(current.closest('.img-grid')?.querySelectorAll<HTMLElement>('.img-item') ?? []);
+    const items = siblings(current);
     const next = items[items.indexOf(current) + dir];
     if (next) show(next);
   }
 
+  function open(item: HTMLElement) {
+    opener = item;
+    show(item);
+    lightbox.hidden = false;
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
   function close() {
     lightbox.classList.remove('is-open');
-    lbImg.src = '';
+    lightbox.hidden = true;
+    lbImg.removeAttribute('src');
     current = null;
     document.body.style.overflow = '';
+    opener?.focus();
   }
 
   document.querySelectorAll<HTMLElement>('.img-item').forEach((item) => {
-    item.addEventListener('click', () => {
-      show(item);
-      lightbox.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
+    // Make each thumbnail reachable and operable from the keyboard.
+    item.tabIndex = 0;
+    item.setAttribute('role', 'button');
+    const label = item.dataset.caption || item.querySelector('img')?.alt;
+    if (label) item.setAttribute('aria-label', `Enlarge: ${label}`);
+    item.addEventListener('click', () => open(item));
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open(item);
+      }
     });
   });
 
   lbClose.addEventListener('click', close);
+  lbPrev.addEventListener('click', () => step(-1));
+  lbNext.addEventListener('click', () => step(1));
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) close();
+    if (e.target === lightbox || (e.target as HTMLElement).classList.contains('lightbox-figure')) close();
   });
   document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('is-open')) return;
+    if (lightbox.hidden) return;
     if (e.key === 'Escape') close();
     if (e.key === 'ArrowRight') step(1);
     if (e.key === 'ArrowLeft') step(-1);
+    // Keep Tab focus inside the viewer while it is open.
+    if (e.key === 'Tab') {
+      const focusable = [lbClose, lbPrev, lbNext].filter((b) => !b.hidden);
+      const i = focusable.indexOf(document.activeElement as HTMLButtonElement);
+      e.preventDefault();
+      const next = e.shiftKey ? (i <= 0 ? focusable.length - 1 : i - 1) : (i + 1) % focusable.length;
+      focusable[next].focus();
+    }
   });
 </script>
