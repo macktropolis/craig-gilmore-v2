@@ -207,7 +207,8 @@ html.menu-open .site-header .logo img { height: 60px; }
   transition: opacity 0.18s, transform 0.18s, visibility 0s 0.18s;
   pointer-events: none;
 }
-.nav-has-dropdown:hover .dropdown-menu {
+.nav-has-dropdown:hover .dropdown-menu,
+.nav-has-dropdown:focus-within .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
@@ -310,7 +311,7 @@ html.menu-open { overflow: hidden; }
 .mobile-nav-inner { padding-block: 1.5rem 3rem; }
 .mobile-nav-list { list-style: none; }
 .mobile-nav-list > li { border-bottom: 1px solid var(--border); }
-.mobile-nav-sub { list-style: none; padding-bottom: 0.75rem; }
+.mobile-nav-sub { list-style: none; padding-bottom: 0.75rem; margin-top: -0.4rem; }
 .mobile-nav-group,
 .mobile-nav-link {
   display: block;

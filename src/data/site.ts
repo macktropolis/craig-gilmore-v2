@@ -12,11 +12,11 @@ export const primaryNav = [
   { label: 'Home', href: '/' },
   {
     label: 'Portfolio',
+    href: '/portfolio/', // the full portfolio; the dropdown lists the sections
     children: [
       { label: 'Storyboards', href: '/storyboards/' },
       { label: 'Concept Art', href: '/concept-art/' },
       { label: 'Comics', href: '/comics/' },
-      { label: 'All Work', href: '/portfolio/' },
     ],
   },
   { label: 'Ethereal: A Tale', href: '/ethereal/' },

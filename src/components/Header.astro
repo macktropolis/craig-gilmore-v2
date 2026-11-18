@@ -15,11 +15,11 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       {primaryNav.map((item) =>
         item.children ? (
           <div class="nav-has-dropdown">
-            <a href="#" class:list={['nav-link', { active: item.children.some((c) => isActive(c.href)) }]} aria-haspopup="true">
-              {item.label} <span class="nav-caret">▾</span>
+            <a href={item.href} class:list={['nav-link', { active: isActive(item.href!) || item.children.some((c) => isActive(c.href)) }]}>
+              {item.label} <span class="nav-caret" aria-hidden="true">▾</span>
             </a>
-            <div class="dropdown-menu" role="menu">
-              {item.children.map((c) => <a href={c.href} role="menuitem">{c.label}</a>)}
+            <div class="dropdown-menu">
+              {item.children.map((c) => <a href={c.href}>{c.label}</a>)}
             </div>
           </div>
         ) : (
@@ -60,7 +60,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       {primaryNav.map((item) =>
         item.children ? (
           <li>
-            <span class="mobile-nav-group">{item.label}</span>
+            <a href={item.href} class:list={['mobile-nav-link', { active: isActive(item.href!) }]} aria-current={isActive(item.href!) ? 'page' : undefined}>{item.label}</a>
             <ul class="mobile-nav-sub">
               {item.children.map((c) => (
                 <li><a href={c.href} class:list={['mobile-nav-link', 'is-sub', { active: isActive(c.href) }]} aria-current={isActive(c.href) ? 'page' : undefined}>{c.label}</a></li>
