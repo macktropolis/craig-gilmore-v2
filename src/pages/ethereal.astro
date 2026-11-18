@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Lightbox from '../components/Lightbox.astro';
+import { BREVO_FORM_URL } from '../data/site';
 import '../styles/gallery.css';
 
 const project = await getEntry('portfolio', 'ethereal-a-tale-an-original-graphic-novel-by-craig-gilmore');
@@ -39,13 +40,31 @@ const images = project?.data.images ?? [];
           <p class="section-label reveal">Be the First to Know</p>
           <h2 class="ethereal-title reveal reveal-delay-1">Get Release<br />Updates</h2>
           <p class="ethereal-desc reveal reveal-delay-2">
-            Craig's most ambitious creative work to date. Sign up to hear about the progress and publication of
-            <em>Ethereal: A Tale</em> — preview art drops, the official release announcement and the Kickstarter launch.
+            Craig's most ambitious creative work to date. Sign up to hear about the progress and publication of <em>Ethereal: A Tale</em> — preview art drops, the official release announcement and the Kickstarter launch.
           </p>
-          <!-- TODO: replace this button with the Brevo signup form embed once it's created in Brevo. -->
-          <div class="reveal reveal-delay-3">
-            <a href="mailto:craig@craiggilmore.net?subject=Ethereal%3A%20A%20Tale%20updates" class="btn btn-primary">Get Notified of Release</a>
-          </div>
+          {BREVO_FORM_URL ? (
+            <form class="signup-form reveal reveal-delay-3" method="post" action={BREVO_FORM_URL}>
+              <div class="signup-fields">
+                <label class="signup-field">
+                  <span>First name <em>(optional)</em></span>
+                  <input type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="200" />
+                </label>
+                <label class="signup-field">
+                  <span>Email</span>
+                  <input type="email" name="EMAIL" autocomplete="email" required />
+                </label>
+              </div>
+              <!-- Honeypot: Brevo rejects submissions where this hidden field is filled in. -->
+              <input class="signup-hp" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <input type="hidden" name="locale" value="en" />
+              <button type="submit" class="btn btn-primary">Get Notified of Release</button>
+              <p class="signup-note">You'll get an email to confirm. No spam, and you can unsubscribe any time.</p>
+            </form>
+          ) : (
+            <div class="reveal reveal-delay-3">
+              <a href="mailto:craig@craiggilmore.net?subject=Ethereal%3A%20A%20Tale%20updates" class="btn btn-primary">Get Notified of Release</a>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -76,4 +95,40 @@ const images = project?.data.images ?? [];
   .ethereal-page-intro { border-bottom: 1px solid var(--border); }
   .ethereal-logo-img { width: 100%; border-radius: 4px; display: block; }
   .ethereal-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); align-items: start; }
+
+  .signup-form { max-width: 520px; }
+  .signup-fields {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .signup-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .signup-field span {
+    font-family: var(--font-cond);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .signup-field em { font-style: normal; font-weight: 400; color: var(--text-dim); }
+  .signup-field input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border-hi);
+    border-radius: 3px;
+    padding: 0.75rem 0.875rem;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.9375rem;
+    transition: border-color 0.15s;
+  }
+  .signup-field input:focus { outline: none; border-color: var(--accent); }
+  .signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .signup-note { margin-top: 0.875rem; font-size: 0.8125rem; color: var(--text-muted); }
+  @media (max-width: 560px) {
+    .signup-fields { grid-template-columns: 1fr; }
+    .signup-form .btn { width: 100%; justify-content: center; }
+  }
 </style>

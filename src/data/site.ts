@@ -2,6 +2,12 @@
 
 export const STORE_URL = 'https://craiggilmore.square.site';
 
+// Brevo form for Ethereal release updates. In Brevo: Contacts → Forms → the
+// form → Share → "Embed HTML", and copy the <form action="…sibforms.com/serve/…">
+// URL here. Set the form's confirmation to redirect to /ethereal/thanks/.
+// While this is empty the Ethereal page shows an email button instead.
+export const BREVO_FORM_URL = '';
+
 export const primaryNav = [
   { label: 'Home', href: '/' },
   {

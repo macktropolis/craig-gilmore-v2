@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/gallery.css';
+---
+
+<BaseLayout title="Almost There — Ethereal: A Tale" description="Confirm your email to get Ethereal: A Tale release updates.">
+  <meta slot="head" name="robots" content="noindex" />
+
+  <section class="thanks">
+    <div class="container">
+      <p class="page-banner-label">Ethereal: A Tale</p>
+      <h1 class="thanks-title">Check Your<br />Inbox</h1>
+      <p class="thanks-text">
+        Thanks for signing up. We've sent you an email: click the link in it to confirm, and you'll be on the list
+        for preview art, the release announcement and the Kickstarter launch. If it doesn't arrive in a few minutes,
+        check your spam or promotions folder.
+      </p>
+      <div class="thanks-ctas">
+        <a href="/ethereal/" class="btn btn-primary">Back to Ethereal</a>
+        <a href="/portfolio/" class="btn btn-outline">View Craig's Work</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style is:global>
+  .thanks {
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    padding: calc(var(--nav-h) + 4rem) 0 5rem;
+    background: radial-gradient(ellipse at 20% 40%, var(--accent-dim) 0%, transparent 60%);
+  }
+  .thanks-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .thanks-text {
+    max-width: 52ch;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .thanks-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+</style>
