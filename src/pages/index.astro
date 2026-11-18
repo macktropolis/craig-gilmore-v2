@@ -15,7 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="hero-eyebrow">Illustrator &amp; Artist</p>
 
       <h1 class="hero-name">
-        <span class="hero-name-text"><span class="name-first">Craig</span><span class="name-last">Gilmore</span></span>
+        <span class="hero-name-text"><span class="name-first">Craig</span> <span class="name-last">Gilmore</span></span>
       </h1>
 
       <p class="hero-roles">
@@ -36,8 +36,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <img src="/images/ethereal-logo-final.jpg" alt="Featured artwork">
+    <div class="hero-visual">
+      <img
+        src="/images/home/hero-thor.webp"
+        width="658" height="973"
+        alt="Thor, illustrated by Craig Gilmore"
+        fetchpriority="high"
+      />
+      <a href="/portfolio/thor/" class="hero-credit">Featured: <span>Thor</span></a>
     </div>
 
     <p class="scroll-hint" aria-hidden="true">Scroll</p>
@@ -63,7 +69,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- STORYBOARDS — large left card -->
         <a href="/storyboards/" class="p-card p-card--storyboards reveal">
-          <div class="p-card-bg"></div>
+          <img class="p-card-bg" src="/images/home/card-storyboards.webp" width="1100" height="1424" alt="" loading="lazy" decoding="async" />
           <div class="p-card-overlay">
             <p class="p-card-cat">Feature Work</p>
             <h3 class="p-card-name">Storyboards</h3>
@@ -76,7 +82,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- CONCEPT ART -->
         <a href="/concept-art/" class="p-card p-card--concept reveal reveal-delay-1">
-          <div class="p-card-bg"></div>
+          <img class="p-card-bg" src="/images/home/card-concept.webp" width="940" height="1194" alt="" loading="lazy" decoding="async" />
           <div class="p-card-overlay">
             <p class="p-card-cat">Development</p>
             <h3 class="p-card-name">Concept Art</h3>
@@ -89,7 +95,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- COMICS -->
         <a href="/comics/" class="p-card p-card--comics reveal reveal-delay-2">
-          <div class="p-card-bg"></div>
+          <img class="p-card-bg" src="/images/home/card-comics.webp" width="470" height="720" alt="" loading="lazy" decoding="async" />
           <div class="p-card-overlay">
             <p class="p-card-cat">Publishing</p>
             <h3 class="p-card-name">Comics</h3>
@@ -113,10 +119,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="ethereal-inner">
 
         <div class="ethereal-visual reveal">
-          <!-- Replace with actual Ethereal cover art when available -->
-          <div class="ethereal-cover" aria-hidden="true">
-            <span class="cover-text">Ethereal:<br>A Tale</span>
-          </div>
+          <a href="/ethereal/" class="ethereal-cover">
+            <img
+              src="/images/home/ethereal-cover.webp"
+              width="792" height="1224"
+              alt="Ethereal: A Tale, Season One: Stygian promotional art"
+              loading="lazy" decoding="async"
+            />
+          </a>
         </div>
 
         <div class="ethereal-content">
@@ -151,8 +161,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="about-photo-wrap reveal">
           <div class="about-photo">
-            <!-- Replace placeholder with actual photo: <img src="img/craig-gilmore.jpg" alt="Craig Gilmore"> -->
-            <div class="about-photo-placeholder" aria-label="Portrait of Craig Gilmore">CG</div>
+            <img
+              src="/images/home/craig-portrait.webp"
+              width="800" height="800"
+              alt="Craig Gilmore"
+              loading="lazy" decoding="async"
+            />
           </div>
         </div>
 
@@ -164,7 +178,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <p>
               I am a 38-year veteran comic book creator and storyboard artist actively producing work for the motion picture, television, and video game industries, as well as advertising agencies and major comic book publishers.
             </p>
-            <br>
             <p>
               Based in Bolivia, NC, I work from my home studio with a fully mobile kit for on-location and remote productions. I am a proud <strong>I.A.T.S.E.</strong> union artist, represented for personal appearances by <strong>Pearl Talent Management</strong>.
             </p>
