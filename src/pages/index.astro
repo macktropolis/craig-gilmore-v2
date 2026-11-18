@@ -1,5 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Hero slideshow. Images live in public/images/home/ (resized WebP copies of portfolio art).
+// `position` is the CSS object-position used to frame each piece in the hero.
+const slides = [
+  { src: '/images/home/hero-thor.webp', width: 658, height: 973, title: 'Thor', href: '/portfolio/thor/', alt: 'Thor, comic illustration by Craig Gilmore', position: 'center 20%' },
+  { src: '/images/home/hero-swamp.webp', width: 1600, height: 1000, title: 'Swamp Thing', href: '/portfolio/swamp-thing-warner-brothersdc-comics/', alt: 'Swamp Thing concept art: a lab on stilts in a flooded swamp', position: '62% center' },
+  { src: '/images/home/hero-cops.webp', width: 1600, height: 2068, title: "Let's Be Cops", href: '/portfolio/lets-be-cops-20th-century-fox-director-luke-greenfieldprod-designer-bill-arnold-images-posting-after-project-release/', alt: "Let's Be Cops key art painting by Craig Gilmore", position: 'center 35%' },
+  { src: '/images/home/hero-cell.webp', width: 1333, height: 1000, title: 'Cell', href: '/portfolio/cell-benaroya-pictures-director-tod-kip-williams/', alt: 'Cell concept art: a cell tower crackling with lightning', position: '60% center' },
+  { src: '/images/home/hero-rings.webp', width: 1600, height: 1600, title: 'Rings', href: '/portfolio/rings-paramount-pictures-director-f-javier-gutierrez/', alt: 'Rings concept art: sheets on a line before a dark mountain', position: 'center 45%' },
+];
 ---
 
 <BaseLayout
@@ -36,14 +46,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
 
-    <div class="hero-visual">
-      <img
-        src="/images/home/hero-thor.webp"
-        width="658" height="973"
-        alt="Thor, illustrated by Craig Gilmore"
-        fetchpriority="high"
-      />
-      <a href="/portfolio/thor/" class="hero-credit">Featured: <span>Thor</span></a>
+    <div class="hero-visual" data-hero-slides aria-roledescription="carousel" aria-label="Featured artwork">
+      {slides.map((slide, i) => (
+        <img
+          class:list={['hero-slide', { 'is-active': i === 0 }]}
+          src={slide.src}
+          width={slide.width}
+          height={slide.height}
+          alt={slide.alt}
+          style={`object-position:${slide.position}`}
+          fetchpriority={i === 0 ? 'high' : 'low'}
+          decoding={i === 0 ? 'sync' : 'async'}
+          aria-hidden={i === 0 ? undefined : 'true'}
+          data-title={slide.title}
+          data-href={slide.href}
+        />
+      ))}
+
+      <div class="hero-controls">
+        <a href={slides[0].href} class="hero-credit" data-hero-credit>Featured: <span>{slides[0].title}</span></a>
+        <div class="hero-dots" role="group" aria-label="Choose featured artwork">
+          {slides.map((slide, i) => (
+            <button type="button" class:list={['hero-dot', { 'is-active': i === 0 }]} aria-label={`Show ${slide.title}`} aria-pressed={i === 0 ? 'true' : 'false'} data-index={i}></button>
+          ))}
+        </div>
+        <button type="button" class="hero-pause" data-hero-pause aria-label="Pause slideshow" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-pause"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="icon-play"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>
+        </button>
+      </div>
     </div>
 
     <p class="scroll-hint" aria-hidden="true">Scroll</p>
@@ -216,3 +247,59 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  // Hero slideshow: crossfades between the featured pieces every few seconds.
+  // Pauses when the tab is hidden, when the visitor presses pause, and never
+  // autoplays for visitors who prefer reduced motion.
+  const root = document.querySelector<HTMLElement>('[data-hero-slides]');
+  if (root) {
+    const slides = [...root.querySelectorAll<HTMLImageElement>('.hero-slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('.hero-dot')];
+    const credit = root.querySelector<HTMLAnchorElement>('[data-hero-credit]')!;
+    const pauseBtn = root.querySelector<HTMLButtonElement>('[data-hero-pause]')!;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const INTERVAL = 6500;
+    let current = 0;
+    let timer: number | undefined;
+    let paused = reduceMotion.matches;
+
+    const show = (next: number) => {
+      if (next === current) return;
+      slides[current].classList.remove('is-active');
+      slides[current].setAttribute('aria-hidden', 'true');
+      dots[current].classList.remove('is-active');
+      dots[current].setAttribute('aria-pressed', 'false');
+      current = (next + slides.length) % slides.length;
+      const slide = slides[current];
+      slide.classList.add('is-active');
+      slide.removeAttribute('aria-hidden');
+      dots[current].classList.add('is-active');
+      dots[current].setAttribute('aria-pressed', 'true');
+      credit.href = slide.dataset.href!;
+      credit.querySelector('span')!.textContent = slide.dataset.title!;
+    };
+
+    const stop = () => { window.clearInterval(timer); timer = undefined; };
+    const start = () => {
+      stop();
+      if (paused || document.hidden || slides.length < 2) return;
+      timer = window.setInterval(() => show(current + 1), INTERVAL);
+    };
+    const setPaused = (value: boolean) => {
+      paused = value;
+      root.classList.toggle('is-paused', paused);
+      pauseBtn.setAttribute('aria-pressed', String(paused));
+      pauseBtn.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
+      start();
+    };
+
+    dots.forEach((dot) => dot.addEventListener('click', () => {
+      show(Number(dot.dataset.index));
+      start(); // restart the timer so the chosen piece gets a full turn
+    }));
+    pauseBtn.addEventListener('click', () => setPaused(!paused));
+    document.addEventListener('visibilitychange', start);
+    setPaused(paused);
+  }
+</script>

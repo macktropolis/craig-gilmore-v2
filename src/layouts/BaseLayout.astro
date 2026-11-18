@@ -29,7 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <slot name="head" />
@@ -59,16 +59,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         revealEls.forEach((el) => el.classList.add('is-visible'));
       }
 
-      // Sticky header background intensifies on scroll
+      // Header is transparent at the top of the page and turns into a
+      // frosted bar once the page scrolls beneath it.
       const header = document.querySelector<HTMLElement>('.site-header');
       if (header) {
-        window.addEventListener(
-          'scroll',
-          () => {
-            header.style.background = window.scrollY > 40 ? 'rgba(9, 9, 9, 0.97)' : 'rgba(9, 9, 9, 0.88)';
-          },
-          { passive: true }
-        );
+        const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+        update();
+        window.addEventListener('scroll', update, { passive: true });
       }
     </script>
   </body>

@@ -17,7 +17,7 @@
   --accent-glow:    rgba(200, 0, 62, 0.18);
   --accent-dim:     rgba(200, 0, 62, 0.12);
 
-  --font-display:   'Alfa Slab One', serif;
+  --font-display:   'Anton', 'Impact', 'Arial Narrow', sans-serif;
   --font-cond:      'Barlow Condensed', sans-serif;
   --font-body:      'Barlow', sans-serif;
   --font-logo:      'Dancing Script', cursive; /* retained as fallback only */
@@ -57,7 +57,7 @@ body::after {
 img { display: block; max-width: 100%; height: auto; }
 a  { color: inherit; text-decoration: none; }
 
-/* Alfa Slab One ships as a single 400-weight face; prevent browser bold synthesis */
+/* Anton ships as a single 400-weight face; prevent browser bold synthesis */
 h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
 .container {
@@ -77,33 +77,62 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(9, 9, 9, 0.88);
-  backdrop-filter: blur(16px) saturate(1.4);
-  border-bottom: 1px solid var(--border);
-  transition: background 0.3s;
+  /* Transparent at the top of the page, so the header floats over the hero art. */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
 }
+/* Soft shade behind the nav links, so they stay legible over bright artwork. */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: calc(var(--nav-h) + 48px);
+  background: linear-gradient(rgba(9, 9, 9, 0.7), rgba(9, 9, 9, 0.35) 55%, transparent);
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 0.35s ease;
+}
+/* Once the page scrolls, content slides beneath a frosted bar. */
+.site-header.is-scrolled {
+  background: rgba(9, 9, 9, 0.72);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom-color: var(--border);
+}
+.site-header.is-scrolled::before { opacity: 0; }
+html.menu-open .site-header { background: var(--bg); border-bottom-color: var(--border); }
 
 .header-inner {
   display: flex;
   align-items: center;
   width: 100%;
+  height: 100%; /* match the bar, so the tall logo overflows downward, not up */
   gap: 2rem;
 }
 
 .logo {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-shrink: 0;
   line-height: 1;
+  /* Pinned to the top of the bar: the signature hangs below it at the top of
+     the page, then settles inside the bar once the page scrolls. */
+  align-self: flex-start;
+  margin-top: 10px;
+  transition: margin-top 0.35s ease;
 }
 .logo img {
-  height: 52px;
+  height: 112px;
   width: auto;
   mix-blend-mode: screen; /* drops the black bg, leaves the white signature */
-  filter: brightness(1.05);
-  transition: opacity 0.2s;
+  filter: brightness(1.05) drop-shadow(0 2px 12px rgba(0, 0, 0, 0.45));
+  transition: height 0.35s ease, opacity 0.2s;
 }
 .logo:hover img { opacity: 0.85; }
+.site-header.is-scrolled .logo { margin-top: 4px; }
+.site-header.is-scrolled .logo img { height: 60px; }
+html.menu-open .site-header .logo img { height: 60px; }
 
 .site-nav {
   display: flex;
@@ -284,6 +313,7 @@ html.menu-open { overflow: hidden; }
   display: block;
   padding: 1rem 0;
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: 1.5rem;
   line-height: 1.1;
   color: var(--text);
@@ -313,6 +343,12 @@ html.menu-open { overflow: hidden; }
   .site-nav,
   .header-social { display: none; }
   .menu-toggle { display: inline-flex; }
+  .logo img { height: 84px; }
+  .site-header.is-scrolled .logo img,
+  html.menu-open .site-header .logo img { height: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo, .logo img { transition: none; }
 }
 @media (min-width: 901px) {
   .mobile-nav { display: none !important; }
@@ -327,19 +363,21 @@ html.menu-open { overflow: hidden; }
    ============================================================ */
 .hero {
   min-height: 100svh;
-  display: grid;
-  grid-template-columns: 5fr 4fr;
+  display: flex;
+  align-items: center;
   padding-top: var(--nav-h);
   position: relative;
   overflow: hidden;
 }
 
+/* Text lines up with the site container; the artwork fills the space to its right. */
 .hero-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
   padding: clamp(3rem, 8vw, 5rem) var(--pad);
-  padding-left: clamp(var(--pad), calc(50vw - 580px + var(--pad)), 6vw);
+  padding-left: max(var(--pad), calc(50vw - 580px + var(--pad)));
   position: relative;
   z-index: 1;
 }
@@ -378,9 +416,10 @@ html.menu-open { overflow: hidden; }
 }
 .hero-name-text {
   font-family: var(--font-display);
-  font-size: clamp(3.25rem, 6.6vw, 6.25rem);
-  line-height: 0.92;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
 }
 .hero-name-text .name-first,
 .hero-name-text .name-last { display: block; }
@@ -450,24 +489,83 @@ html.menu-open { overflow: hidden; }
   color: var(--text);
 }
 
-/* Hero visual */
+/* Hero visual: crossfading slideshow anchored to the right edge */
 .hero-visual {
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(64%, 1240px);
   overflow: hidden;
+  z-index: 0; /* own stacking context, so the text column stays on top */
 }
-.hero-visual img {
+.hero-slide {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 1.4s ease, transform 9s linear;
 }
-.hero-credit {
+.hero-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-controls {
   position: absolute;
   right: var(--pad);
-  bottom: 2rem;
+  bottom: 1.75rem;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.hero-dots { display: flex; }
+.hero-dot {
+  width: 22px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.hero-dot::before {
+  content: '';
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+  background: rgba(240, 235, 224, 0.35);
+  transition: background 0.2s, width 0.25s;
+}
+.hero-dot:hover::before { background: rgba(240, 235, 224, 0.7); }
+.hero-dot.is-active::before { width: 18px; background: var(--accent-hi); }
+.hero-pause {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(240, 235, 224, 0.25);
+  border-radius: 50%;
+  background: rgba(9, 9, 9, 0.5);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.hero-pause:hover { border-color: var(--text); }
+.hero-pause svg { width: 12px; height: 12px; fill: currentColor; }
+.hero-pause .icon-play { display: none; }
+.hero-visual.is-paused .icon-pause { display: none; }
+.hero-visual.is-paused .icon-play { display: block; margin-left: 2px; }
+.hero-dot:focus-visible,
+.hero-pause:focus-visible,
+.hero-credit:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+
+.hero-credit {
   font-family: var(--font-cond);
   font-size: 0.75rem;
   font-weight: 700;
@@ -514,7 +612,7 @@ html.menu-open { overflow: hidden; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 3%, rgba(9,9,9,0.45) 24%, transparent 55%);
+  background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 4%, rgba(9,9,9,0.6) 22%, rgba(9,9,9,0.15) 42%, transparent 60%);
   z-index: 1;
   inset: 0 0 0 -2px;
   pointer-events: none;
@@ -582,9 +680,10 @@ html.menu-open { overflow: hidden; }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(2.25rem, 4.5vw, 4rem);
-  line-height: 1;
-  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
   color: var(--text);
 }
 
@@ -666,9 +765,10 @@ html.menu-open { overflow: hidden; }
 
 .p-card-name {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.6rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 0.95;
+  letter-spacing: 0.015em;
   color: var(--text);
   margin-bottom: 1.1rem;
   text-shadow: 0 2px 18px rgba(0,0,0,0.6);
@@ -764,6 +864,7 @@ html.menu-open { overflow: hidden; }
   position: absolute;
   bottom: 2rem; left: 2rem; right: 2rem;
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: 2.25rem;
   line-height: 1;
   letter-spacing: 0.04em;
@@ -801,9 +902,10 @@ html.menu-open { overflow: hidden; }
 
 .ethereal-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  line-height: 0.95;
-  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  font-size: clamp(2.75rem, 5.6vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
   color: var(--text);
   margin-bottom: 0.75rem;
 }
@@ -863,6 +965,7 @@ html.menu-open { overflow: hidden; }
   justify-content: center;
   background: linear-gradient(160deg, #181210 0%, #0f0f0f 100%);
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: 5rem;
   color: var(--text-dim);
   letter-spacing: 0.05em;
@@ -938,9 +1041,10 @@ html.menu-open { overflow: hidden; }
 }
 .commission-heading {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 3.25rem);
+  text-transform: uppercase;
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
   line-height: 1;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.015em;
   color: var(--text);
 }
 .commission-heading em {
@@ -1070,6 +1174,7 @@ html.menu-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-hint::after, .ethereal-badge .pulse-dot { animation: none; }
+  .hero-slide { transform: none; transition: opacity 0.6s ease; }
   .p-card-bg, .ethereal-cover img { transition: none; }
 }
 
@@ -1077,17 +1182,12 @@ html.menu-open { overflow: hidden; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 960px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: unset;
-  }
-  .hero-visual {
-    position: absolute;
-    inset: 0;
-    opacity: 0.4;
-  }
+  .hero { min-height: unset; }
+  .hero-visual { width: 100%; }
+  .hero-slide.is-active { opacity: 0.4; }
   .hero-visual::before { background: linear-gradient(90deg, var(--bg) 0%, rgba(9,9,9,0.55) 60%, rgba(9,9,9,0.2) 100%); }
   .hero-credit { display: none; }
+  .hero-controls { bottom: 1rem; }
   .scroll-hint { display: none; }
   .hero-content {
     padding: calc(var(--nav-h) + 3rem) var(--pad) 5rem;

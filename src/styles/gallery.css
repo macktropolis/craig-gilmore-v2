@@ -34,6 +34,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 }
 .page-banner-title {
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: clamp(3rem, 7vw, 6rem);
   line-height: 0.95;
   letter-spacing: 0.025em;
@@ -72,6 +73,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 }
 .project-title {
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   color: var(--text);
   line-height: 1;
@@ -268,12 +270,14 @@ h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 .project-card:hover .project-card-img img { transform: scale(1.04); }
 .project-card-initial {
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: 3rem;
   color: var(--text-dim);
 }
 .project-card-body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
 .project-card-title {
   font-family: var(--font-display);
+  text-transform: uppercase;
   font-size: 1.15rem;
   line-height: 1.15;
   color: var(--text);
