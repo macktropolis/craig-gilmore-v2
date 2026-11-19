@@ -1,6 +1,6 @@
 # Current State
 
-Last updated: 2026-11-18
+Last updated: 2026-11-19
 
 Craig Gilmore's portfolio site (comic book creator, storyboard artist and illustrator) is being moved off WordPress, which is still live at https://www.craiggilmore.net. The replacement is a static Astro site hosted on Cloudflare Workers.
 
@@ -8,7 +8,7 @@ The rebuild and a full design pass are finished and merged to `main`. Open work 
 
 ## Where things live
 
-- **GitHub:** `macktropolis/craig-gilmore-v2`. `main` is the only branch.
+- **GitHub:** `macktropolis/craig-gilmore-v2`. Work happens on `main`.
 - **Local working copy:** `~/Developer/craiggilmore_net`. Use this one for day-to-day work.
 - **Colossus copy:** `/Volumes/Colossus-1/Clients/Craig Gilmore/Websites`.
   - Over the network share, npm and git are slow, so avoid running `npm install` there.
@@ -28,7 +28,10 @@ The rebuild and a full design pass are finished and merged to `main`. Open work 
 
 ## Hosting
 
+- **Test domain:** https://craig-gilmore-v2.mack-f57.workers.dev serves the latest `main` build until www.craiggilmore.net is pointed at the Worker.
 - **Cloudflare Worker:** `craig-gilmore-v2`, configured in `wrangler.jsonc`.
+  - Pushes to `main` build and deploy automatically through Cloudflare Workers Builds.
+  - Builds of other branches failed instantly with no log (2026-11-19). Until that's sorted out, work directly on `main`.
   - It serves `./dist` as static assets.
   - `not_found_handling: "404-page"` serves `dist/404.html` for unknown URLs.
   - Build command: `npm run build`. Deploy command: `npx wrangler deploy`.
