@@ -10,10 +10,6 @@ The rebuild and a full design pass are finished and merged to `main`. Open work 
 
 - **GitHub:** `macktropolis/craig-gilmore-v2`. Work happens on `main`.
 - **Local working copy:** `~/Developer/craiggilmore_net`. Use this one for day-to-day work.
-- **Colossus copy:** `/Volumes/Colossus-1/Clients/Craig Gilmore/Websites`.
-  - Over the network share, npm and git are slow, so avoid running `npm install` there.
-  - From a machine connected directly to Colossus, it works fine.
-  - Update it with `git pull --ff-only`.
 - **Node:** Astro needs Node 22.23.4 or newer. `.node-version` pins 22.
 
 ## Commands
