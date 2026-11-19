@@ -44,8 +44,8 @@ const images = project?.data.images ?? [];
             <form class="signup-form reveal reveal-delay-3" method="post" action={BREVO_FORM_URL}>
               <div class="signup-fields">
                 <label class="signup-field">
-                  <span>First name <em>(optional)</em></span>
-                  <input type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="200" />
+                  <span>First name</span>
+                  <input type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="200" required />
                 </label>
                 <label class="signup-field">
                   <span>Email</span>
